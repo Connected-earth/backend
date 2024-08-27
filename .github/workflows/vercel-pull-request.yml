@@ -1,4 +1,5 @@
-# vercel-pull-request.yml
+# This workflow will deploy the project on the preview environment when a PR on main is made
+
 name: Create vercel preview URL on pull request
 on:
   pull_request:
