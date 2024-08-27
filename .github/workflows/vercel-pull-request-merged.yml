@@ -1,4 +1,5 @@
-# vercel-merge.yml
+# This workflow will deploy the project on the prod environment when a PR is merged into main
+
 name: Deploy to vercel on merge
 on:
   push:
