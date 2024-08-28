@@ -15,8 +15,12 @@
 
 export class CreateSensorDto {
   id: number;
+  userId: number;
   name: string;
   remark: string;
+  humidity: number;
+  light: number;
+  temperature: number;
   createdAt: Date;
   updatedAt: Date;
 }

@@ -12,6 +12,7 @@
  *   - Quentin Surdez
  *   - Rachel Tranchida
  */
+import { Sensor } from '../../sensors/entities/sensor.entity';
 
 export class CreateUserDto {
   id: number;
@@ -21,4 +22,5 @@ export class CreateUserDto {
   role: string;
   createdAt: Date;
   updatedAt: Date;
+  sensors: Sensor[];
 }

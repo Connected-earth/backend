@@ -32,7 +32,11 @@ export class PlantsService {
   }
 
   findAll(): Promise<Plant[]> {
-    return this.plantsRepository.find();
+    return this.plantsRepository.find({
+      relations: {
+        sensor: true,
+      },
+    });
   }
 
   findOne(id: number): Promise<Plant | null> {

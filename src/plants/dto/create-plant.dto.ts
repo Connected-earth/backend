@@ -15,10 +15,11 @@
 
 export class CreatePlantDto {
   id: number;
+  userId: number;
+  sensorId: number;
   type: string;
   name: string;
   remark: string;
-  sensorId: number;
   createdAt: Date;
   updatedAt: Date;
 }
