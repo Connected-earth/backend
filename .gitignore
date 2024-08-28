@@ -133,4 +133,4 @@ dist
 .DS_Store
 .idea/
 .vercel
-
+./src/auth/constants.ts

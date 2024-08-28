@@ -2,7 +2,7 @@
  * Project Name: PlantKeeper
  *
  * @created 26-08-2024
- * @file users.controller.spec.ts
+ * @file users_test_auth.controller.spec.ts
  * @version 1.0.0
  * @see https://github.com/Plant-keeper
  *
@@ -12,7 +12,6 @@
  *   - Quentin Surdez
  *   - Rachel Tranchida
  */
-
 
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersController } from './users.controller';

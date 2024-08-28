@@ -2,7 +2,7 @@
  * Project Name: PlantKeeper
  *
  * @created 28.08.24
- * @file auth.strategy.ts
+ * @file local.strategy.ts
  * @version 1.0.0
  * @see https://github.com/Plant-keeper
  *

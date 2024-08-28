@@ -2,7 +2,7 @@
  * Project Name: PlantKeeper
  *
  * @created 26-08-2024
- * @file users.service.ts
+ * @file users_test_auth.service.ts
  * @version 1.0.0
  * @see https://github.com/Plant-keeper
  *
@@ -13,14 +13,13 @@
  *   - Rachel Tranchida
  */
 
-
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
-import {Item} from "../items/entities/item.entity";
+import { Item } from '../items/entities/item.entity';
 
 /*
 @Injectable()
