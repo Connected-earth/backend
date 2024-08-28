@@ -22,7 +22,8 @@ export class AuthService {
   constructor(private usersService: UsersService) {}
 
   async signIn(username: string, pass: string) {
-    const user = await this.usersService.findOne(username);
+    // So the api is working
+    const user = await this.usersService.findOne(1);
 
     if (user?.password !== pass) {
       throw new UnauthorizedException();

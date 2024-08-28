@@ -1,8 +1,8 @@
 /**
  * Project Name: PlantKeeper
  *
- * @created 26-08-2024
- * @file user.entity.ts
+ * @created 28-08-2024
+ * @file sensor.entity.ts
  * @version 1.0.0
  * @see https://github.com/Plant-keeper
  *
@@ -21,22 +21,16 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity({ schema: 'plantkeeper_test' })
-export class User {
+@Entity()
+export class Sensor {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  username: string;
+  name: string;
 
   @Column()
-  email: string;
-
-  @Column()
-  password: string;
-
-  @Column()
-  role: string;
+  remark: string;
 
   @CreateDateColumn()
   createdAt: Date;
