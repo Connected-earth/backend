@@ -17,9 +17,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Sensor } from '../../sensors/entities/sensor.entity';
+import { Plant } from '../../plants/entities/plant.entity';
 
 @Entity({ schema: 'plantkeeper_test' })
 export class User {
@@ -43,4 +46,14 @@ export class User {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToMany(() => Sensor, (sensor) => sensor.user, {
+    eager: true,
+  })
+  sensors: Sensor[];
+
+  @OneToMany(() => Plant, (plant) => plant.user, {
+    eager: true,
+  })
+  plants: Plant[];
 }

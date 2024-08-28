@@ -32,7 +32,12 @@ export class UsersService {
   }
 
   findAll(): Promise<User[]> {
-    return this.usersRepository.find();
+    return this.usersRepository.find({
+      relations: {
+        sensors: true,
+        plants: true,
+      },
+    });
   }
 
   findOne(id: number): Promise<User | null> {

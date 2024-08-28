@@ -17,20 +17,39 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { User } from '../../users/entities/user.entity';
+import { Plant } from '../../plants/entities/plant.entity';
 
-@Entity()
+@Entity({ schema: 'plantkeeper_test' })
 export class Sensor {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @ManyToOne(() => User, (user) => user.sensors)
+  user: User;
+
+  @OneToOne(() => Plant, (plant) => plant.sensor)
+  plant: Plant;
 
   @Column()
   name: string;
 
   @Column()
   remark: string;
+
+  @Column({ nullable: true })
+  humidity: number;
+
+  @Column({ nullable: true })
+  light: number;
+
+  @Column({ nullable: true })
+  temperature: number;
 
   @CreateDateColumn()
   createdAt: Date;

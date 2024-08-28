@@ -17,14 +17,28 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { User } from '../../users/entities/user.entity';
+import { Sensor } from '../../sensors/entities/sensor.entity';
 
-@Entity()
+@Entity({ schema: 'plantkeeper_test' })
 export class Plant {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @ManyToOne(() => User, (user) => user.sensors)
+  user: User;
+
+  @OneToOne(() => Sensor, (sensor) => sensor.plant, {
+    eager: true,
+  })
+  @JoinColumn()
+  sensor: Sensor;
 
   @Column()
   type: string;
@@ -34,9 +48,6 @@ export class Plant {
 
   @Column()
   remark: string;
-
-  @Column()
-  sensorId: number;
 
   @CreateDateColumn()
   createdAt: Date;
