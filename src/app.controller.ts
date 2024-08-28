@@ -13,8 +13,9 @@
  *   - Rachel Tranchida
  */
 
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Post, UseGuards, Request } from '@nestjs/common';
 import { AppService } from './app.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller()
 export class AppController {
@@ -23,5 +24,11 @@ export class AppController {
   @Get()
   getHello(): string {
     return this.appService.getHello();
+  }
+
+  @UseGuards(AuthGuard('local'))
+  @Post('/auth/login')
+  async login(@Request() req) {
+    return req.user;
   }
 }

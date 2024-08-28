@@ -13,7 +13,6 @@
  *   - Rachel Tranchida
  */
 
-
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 
@@ -21,18 +20,12 @@ import { UsersService } from '../users/users.service';
 export class AuthService {
   constructor(private usersService: UsersService) {}
 
-  async signIn(username: string, pass: string) {
+  async validateUser(username: string, pass: string): Promise<any> {
     const user = await this.usersService.findOne(username);
-
-    if (user?.password !== pass) {
-      throw new UnauthorizedException();
+    if (user && user.password === pass) {
+      const { password, ...result } = user;
+      return result;
     }
-
-    // Use bcrypt https://github.com/kelektiv/node.bcrypt.js#readme
-    // for storing the password safely and checking the hashed password
-    const { password, ...result } = user;
-    // TODO: return a JWT and return it here
-    // instead of the user object
-    return result;
+    return null;
   }
 }
