@@ -1,3 +1,18 @@
+/**
+ * Project Name: PlantKeeper
+ *
+ * @created 28-08-2024
+ * @file sensors.controller.spec.ts
+ * @version 1.0.0
+ * @see https://github.com/Plant-keeper
+ *
+ * @authors
+ *   - Rafael Dousse
+ *   - Eva Ray
+ *   - Quentin Surdez
+ *   - Rachel Tranchida
+ */
+
 import { Test, TestingModule } from '@nestjs/testing';
 import { SensorsController } from './sensors.controller';
 import { SensorsService } from './sensors.service';

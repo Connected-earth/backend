@@ -13,7 +13,6 @@
  *   - Rachel Tranchida
  */
 
-
 import {
   Column,
   CreateDateColumn,
