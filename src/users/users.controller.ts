@@ -23,11 +23,13 @@ import {
   Delete,
   UseGuards,
   Request,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard';
+import { User } from './entities/user.entity';
 
 @Controller('users')
 export class UsersController {
@@ -47,6 +49,30 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   findUserWithJwt(@Request() req: any) {
     return this.findOne(req.user.id);
+  }
+
+  @Get('sensors')
+  @UseGuards(JwtAuthGuard)
+  async findUserRealtedSensors(@Request() req: any) {
+    const user = (await this.findOne(req.user.id)) as User;
+
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+
+    return user.sensors;
+  }
+
+  @Get('plants')
+  @UseGuards(JwtAuthGuard)
+  async findUserRealtedPlants(@Request() req: any) {
+    const user = (await this.findOne(req.user.id)) as User;
+
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+
+    return user.plants;
   }
 
   @Get(':id')
