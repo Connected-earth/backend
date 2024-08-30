@@ -16,7 +16,6 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ItemsModule } from './items/items.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
@@ -39,7 +38,6 @@ import { GeneralPlantsModule } from './plants/general-plants/general-plants.modu
       autoLoadEntities: true,
       synchronize: true,
     }),
-    ItemsModule,
     AuthModule,
     UsersModule,
     PlantsModule,
