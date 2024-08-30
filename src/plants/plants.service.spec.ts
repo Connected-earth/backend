@@ -1,8 +1,8 @@
 /**
  * Project Name: PlantKeeper
  *
- * @created 26-08-2024
- * @file users_test_auth.service.spec.ts
+ * @created 28-08-2024
+ * @file plants.service.specs.ts
  * @version 1.0.0
  * @see https://github.com/Plant-keeper
  *
@@ -14,28 +14,28 @@
  */
 
 import { Test, TestingModule } from '@nestjs/testing';
-import { UsersService } from './users.service';
-import { getRepositoryToken } from '@nestjs/typeorm';
-import { User } from './entities/user.entity';
+import { PlantsService } from './plants.service';
 import { Repository } from 'typeorm';
+import { Plant } from './entities/plant.entity';
+import { getRepositoryToken } from '@nestjs/typeorm';
 
-describe('UsersService', () => {
-  let service: UsersService;
-  let usersRepository: Repository<User>;
+describe('PlantsService', () => {
+  let service: PlantsService;
+  let plantsRepository: Repository<Plant>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        UsersService,
+        PlantsService,
         {
-          provide: getRepositoryToken(User),
+          provide: getRepositoryToken(Plant),
           useClass: Repository,
         },
       ],
     }).compile();
 
-    service = module.get<UsersService>(UsersService);
-    usersRepository = module.get<Repository<User>>(getRepositoryToken(User));
+    service = module.get<PlantsService>(PlantsService);
+    plantsRepository = module.get<Repository<Plant>>(getRepositoryToken(Plant));
   });
 
   it('should be defined', () => {

@@ -1,8 +1,8 @@
 /**
  * Project Name: PlantKeeper
  *
- * @created 26-08-2024
- * @file create-user.dto.ts
+ * @created 28-08-2024
+ * @file create-sensor.dto.ts
  * @version 1.0.0
  * @see https://github.com/Plant-keeper
  *
@@ -12,15 +12,15 @@
  *   - Quentin Surdez
  *   - Rachel Tranchida
  */
-import { Sensor } from '../../sensors/entities/sensor.entity';
 
-export class CreateUserDto {
+export class CreateSensorDto {
   id: number;
+  userId: number;
   name: string;
-  email: string;
-  password: string;
-  role: string;
+  remark: string;
+  humidity: number;
+  light: number;
+  temperature: number;
   createdAt: Date;
   updatedAt: Date;
-  sensors: Sensor[];
 }

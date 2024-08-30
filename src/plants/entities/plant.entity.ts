@@ -1,8 +1,8 @@
 /**
  * Project Name: PlantKeeper
  *
- * @created 26-08-2024
- * @file user.entity.ts
+ * @created 28-08-2024
+ * @file plant.entity.ts
  * @version 1.0.0
  * @see https://github.com/Plant-keeper
  *
@@ -17,43 +17,41 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { User } from '../../users/entities/user.entity';
 import { Sensor } from '../../sensors/entities/sensor.entity';
-import { Plant } from '../../plants/entities/plant.entity';
 
 @Entity({ schema: 'plantkeeper_test' })
-export class User {
+export class Plant {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  username: string;
+  @ManyToOne(() => User, (user) => user.sensors)
+  user: User;
+
+  @OneToOne(() => Sensor, (sensor) => sensor.plant, {
+    eager: true,
+  })
+  @JoinColumn()
+  sensor: Sensor;
 
   @Column()
-  email: string;
+  type: string;
 
   @Column()
-  password: string;
+  name: string;
 
   @Column()
-  role: string;
+  remark: string;
 
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
-
-  @OneToMany(() => Sensor, (sensor) => sensor.user, {
-    eager: true,
-  })
-  sensors: Sensor[];
-
-  @OneToMany(() => Plant, (plant) => plant.user, {
-    eager: true,
-  })
-  plants: Plant[];
 }

@@ -2,7 +2,7 @@
  * Project Name: PlantKeeper
  *
  * @created 26-08-2024
- * @file users_test_auth.controller.ts
+ * @file users.controller.ts
  * @version 1.0.0
  * @see https://github.com/Plant-keeper
  *
@@ -25,6 +25,7 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { User } from './entities/user.entity';
 
 @Controller('users')
 export class UsersController {
