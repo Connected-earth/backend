@@ -21,8 +21,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
-import { PlantsModule } from './plants/plants.module';
+import { PlantsModule } from './plants/userPlants/plants.module';
 import { SensorsModule } from './sensors/sensors.module';
+import { GeneralPlantsModule } from './plants/general-plants/general-plants.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { SensorsModule } from './sensors/sensors.module';
     UsersModule,
     PlantsModule,
     SensorsModule,
+    GeneralPlantsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

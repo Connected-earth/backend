@@ -12,14 +12,10 @@
  *   - Quentin Surdez
  *   - Rachel Tranchida
  */
+import { CreateAbstractPlantDto } from '../../abstractPlants/dto/create-abstractPlant.dto';
 
-export class CreatePlantDto {
-  id: number;
+export class CreatePlantDto extends CreateAbstractPlantDto {
   userId: number;
   sensorId: number;
-  type: string;
-  name: string;
   remark: string;
-  createdAt: Date;
-  updatedAt: Date;
 }
