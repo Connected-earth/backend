@@ -21,7 +21,6 @@ import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { Item } from '../items/entities/item.entity';
 
-/*
 @Injectable()
 export class UsersService {
   constructor(
@@ -41,6 +40,10 @@ export class UsersService {
     return this.usersRepository.findOneBy({ id });
   }
 
+  findOneByMail(email: string): Promise<User | null> {
+    return this.usersRepository.findOneBy({ email });
+  }
+
   async update(id: number, updateUserDto: UpdateUserDto): Promise<void> {
     await this.usersRepository.update(+id, updateUserDto);
   }
@@ -49,9 +52,9 @@ export class UsersService {
     await this.usersRepository.delete(+id);
   }
 }
-*/
 
 // For test purpose
+/*
 @Injectable()
 export class UsersService {
   private readonly users = [
@@ -79,3 +82,4 @@ export class UsersService {
     return this.users.find((user) => user.username === username);
   }
 }
+*/

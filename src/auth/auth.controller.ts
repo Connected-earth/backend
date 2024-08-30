@@ -16,16 +16,18 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 
+export class SignInDto {
+  email: string;
+  password: string;
+}
+
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  validateUser(@Body() signInDto: Record<string, any>) {
-    return this.authService.validateUser(
-      signInDto.username,
-      signInDto.password,
-    );
+  validateUser(@Body() signInDto: SignInDto) {
+    return this.authService.validateUser(signInDto.email, signInDto.password);
   }
 }

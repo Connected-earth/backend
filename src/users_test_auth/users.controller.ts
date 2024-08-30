@@ -29,7 +29,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
-  /*
+
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
@@ -39,12 +39,17 @@ export class UsersController {
   findAll() {
     return this.usersService.findAll();
   }
-*/
+
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: number) {
     return this.usersService.findOne(id);
   }
-  /*
+
+  @Get(':email')
+  findOneByMail(@Param('email') email: string) {
+    return this.usersService.findOneByMail(email);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(+id, updateUserDto);
@@ -54,5 +59,4 @@ export class UsersController {
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);
   }
-  */
 }
