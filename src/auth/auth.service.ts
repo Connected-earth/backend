@@ -13,9 +13,11 @@
  *   - Rachel Tranchida
  */
 
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
+import { User } from '../users/entities/user.entity';
+import { JwtPayloadType } from './types/jwt-payload.type';
 
 @Injectable()
 export class AuthService {
@@ -34,10 +36,25 @@ export class AuthService {
     return null;
   }
 
-  async login(user: any) {
-    const payload = { email: user.email, sub: user.id };
+  async login(user: User) {
+    const payload: JwtPayloadType = {
+      sub: String(user.id),
+      email: user.email,
+      username: user.username,
+      role: user.role,
+    };
     return {
       access_token: this.jwtService.sign(payload),
     };
+  }
+
+  async validateJwtPayload({ sub }: JwtPayloadType): Promise<User> {
+    const user = (await this.usersService.findOne(Number(sub))) as User;
+
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+    Logger.log('from validateJwtPayload:\n' + user.id);
+    return user;
   }
 }
