@@ -18,6 +18,8 @@ import { PlantsService } from './plants.service';
 import { Repository } from 'typeorm';
 import { Plant } from './entities/plant.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { GeneralPlantsService } from '../general-plants/general-plants.service';
+import { GeneralPlant } from '../general-plants/entities/general-plant.entity';
 
 describe('PlantsService', () => {
   let service: PlantsService;
