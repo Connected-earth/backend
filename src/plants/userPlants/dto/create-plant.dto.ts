@@ -15,7 +15,7 @@
 import { CreateAbstractPlantDto } from '../../abstractPlants/dto/create-abstractPlant.dto';
 
 export class CreatePlantDto extends CreateAbstractPlantDto {
-  userId: number;
+  userId?: number;
   sensorId: number;
   remark: string;
 }

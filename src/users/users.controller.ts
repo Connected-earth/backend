@@ -30,10 +30,18 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard';
 import { User } from './entities/user.entity';
+import { CreatePlantDto } from '../plants/userPlants/dto/create-plant.dto';
+import { PlantsService } from '../plants/userPlants/plants.service';
+import { CreateSensorDto } from '../sensors/dto/create-sensor.dto';
+import { SensorsService } from '../sensors/sensors.service';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly plantsService: PlantsService,
+    private readonly sensorsService: SensorsService,
+  ) {}
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
@@ -73,6 +81,34 @@ export class UsersController {
     }
 
     return user.plants;
+  }
+
+  @Post('plants')
+  @UseGuards(JwtAuthGuard)
+  async addPlantToUser(
+    @Request() req: any,
+    @Body() createPlantDto: CreatePlantDto,
+  ) {
+    if (createPlantDto?.userId) {
+      await this.plantsService.create(createPlantDto);
+    } else {
+      createPlantDto.userId = req.user.id;
+      await this.plantsService.create(createPlantDto);
+    }
+  }
+
+  @Post('sensors')
+  @UseGuards(JwtAuthGuard)
+  async addSensorToUser(
+    @Request() req: any,
+    @Body() createSensorDto: CreateSensorDto,
+  ) {
+    if (createSensorDto?.userId) {
+      await this.sensorsService.create(createSensorDto);
+    } else {
+      createSensorDto.userId = req.user.id;
+      await this.sensorsService.create(createSensorDto);
+    }
   }
 
   @Get(':id')
