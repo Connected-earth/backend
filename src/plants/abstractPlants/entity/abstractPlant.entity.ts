@@ -1,8 +1,8 @@
 /**
  * Project Name: PlantKeeper
  *
- * @created 28-08-2024
- * @file plant.entity.ts
+ * @created 30.08.24
+ * @file abstractPlant.entity.ts
  * @version 1.0.0
  * @see https://github.com/Plant-keeper
  *
@@ -17,37 +17,20 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { User } from '../../users/entities/user.entity';
-import { Sensor } from '../../sensors/entities/sensor.entity';
 
-@Entity({ schema: 'plantkeeper_test' })
-export class Plant {
+@Entity('plantkeeper_test')
+export abstract class AbstractPlant {
   @PrimaryGeneratedColumn()
   id: number;
-
-  @ManyToOne(() => User, (user) => user.sensors)
-  user: User;
-
-  @OneToOne(() => Sensor, (sensor) => sensor.plant, {
-    eager: true,
-  })
-  @JoinColumn()
-  sensor: Sensor;
 
   @Column()
   type: string;
 
   @Column()
   name: string;
-
-  @Column()
-  remark: string;
 
   @CreateDateColumn()
   createdAt: Date;

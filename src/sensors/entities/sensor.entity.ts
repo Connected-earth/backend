@@ -23,7 +23,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
-import { Plant } from '../../plants/entities/plant.entity';
+import { Plant } from '../../plants/userPlants/entities/plant.entity';
 
 @Entity({ schema: 'plantkeeper_test' })
 export class Sensor {
