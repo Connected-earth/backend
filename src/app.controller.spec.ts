@@ -13,21 +13,39 @@
  *   - Rachel Tranchida
  */
 
-
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { JwtService } from '@nestjs/jwt';
+import { JwtModule } from '@nestjs/jwt';
+import { AuthService } from './auth/auth.service';
+import { UsersService } from './users/users.service';
+import { Repository } from 'typeorm';
+import { User } from './users/entities/user.entity';
+import { getRepositoryToken } from '@nestjs/typeorm';
 
 describe('AppController', () => {
   let appController: AppController;
+  let usersRepository: Repository<User>;
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
+      imports: [JwtModule.register({ secret: 'test' })],
       controllers: [AppController],
-      providers: [AppService],
+      providers: [
+        AppService,
+        JwtService,
+        AuthService,
+        UsersService,
+        {
+          provide: getRepositoryToken(User),
+          useClass: Repository,
+        },
+      ],
     }).compile();
 
     appController = app.get<AppController>(AppController);
+    usersRepository = app.get<Repository<User>>(getRepositoryToken(User));
   });
 
   describe('root', () => {

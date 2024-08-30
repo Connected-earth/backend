@@ -21,8 +21,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
-import { PlantsService } from './plants/plants.service';
-import { SensorsService } from './sensors/sensors.service';
 import { PlantsModule } from './plants/plants.module';
 import { SensorsModule } from './sensors/sensors.module';
 

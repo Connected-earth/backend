@@ -13,27 +13,31 @@
  *   - Rachel Tranchida
  */
 
-
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    private jwtService: JwtService,
+  ) {}
 
-  async signIn(username: string, pass: string) {
-    // So the api is working
-    const user = await this.usersService.findOne(1);
-
-    if (user?.password !== pass) {
-      throw new UnauthorizedException();
+  async validateUser(email: string, pass: string): Promise<any> {
+    const user = await this.usersService.findOneByMail(email);
+    Logger.log(user);
+    if (user && user.password === pass) {
+      const { password, ...result } = user;
+      return result;
     }
+    return null;
+  }
 
-    // Use bcrypt https://github.com/kelektiv/node.bcrypt.js#readme
-    // for storing the password safely and checking the hashed password
-    const { password, ...result } = user;
-    // TODO: return a JWT and return it here
-    // instead of the user object
-    return result;
+  async login(user: any) {
+    const payload = { email: user.email, sub: user.id };
+    return {
+      access_token: this.jwtService.sign(payload),
+    };
   }
 }
