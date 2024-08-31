@@ -21,10 +21,16 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
+  Request,
+  UnauthorizedException,
+  Logger,
 } from '@nestjs/common';
 import { PlantsService } from './plants.service';
 import { CreatePlantDto } from './dto/create-plant.dto';
 import { UpdatePlantDto } from './dto/update-plant.dto';
+import { JwtAuthGuard } from '../../auth/jwt/jwt-auth.guard';
+import { Plant } from './entities/plant.entity';
 
 @Controller('plants')
 export class PlantsController {
@@ -41,7 +47,21 @@ export class PlantsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  @UseGuards(JwtAuthGuard)
+  async findOne(@Param('id') id: string, @Request() req: any) {
+    const plant = (await this.plantsService.findOne(+id)) as Plant;
+    if (!plant) {
+      throw new UnauthorizedException('Plant not found');
+    }
+
+    const plantsUser = req.user.plants as Plant[];
+    const isPlantUser = plantsUser.some(
+      (plantUser) => plantUser.id === plant.id,
+    );
+
+    if (!isPlantUser) {
+      throw new UnauthorizedException('You do not have access to this plant');
+    }
     return this.plantsService.findOne(+id);
   }
 
