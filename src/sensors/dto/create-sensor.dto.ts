@@ -12,10 +12,13 @@
  *   - Quentin Surdez
  *   - Rachel Tranchida
  */
+import { User } from '../../users/entities/user.entity';
+import { Plant } from '../../plants/userPlants/entities/plant.entity';
 
 export class CreateSensorDto {
   id: number;
-  userId: number;
+  user: User;
+  plant: Plant;
   name: string;
   remark: string;
   humidity: number;

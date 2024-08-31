@@ -24,6 +24,7 @@ import {
   UseGuards,
   Request,
   UnauthorizedException,
+  Logger,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -89,12 +90,8 @@ export class UsersController {
     @Request() req: any,
     @Body() createPlantDto: CreatePlantDto,
   ) {
-    if (createPlantDto?.userId) {
-      await this.plantsService.create(createPlantDto);
-    } else {
-      createPlantDto.userId = req.user.id;
-      await this.plantsService.create(createPlantDto);
-    }
+    createPlantDto.user = req.user;
+    await this.plantsService.create(createPlantDto);
   }
 
   @Post('sensors')
@@ -103,12 +100,8 @@ export class UsersController {
     @Request() req: any,
     @Body() createSensorDto: CreateSensorDto,
   ) {
-    if (createSensorDto?.userId) {
-      await this.sensorsService.create(createSensorDto);
-    } else {
-      createSensorDto.userId = req.user.id;
-      await this.sensorsService.create(createSensorDto);
-    }
+    createSensorDto.user = req.user;
+    await this.sensorsService.create(createSensorDto);
   }
 
   @Get(':id')

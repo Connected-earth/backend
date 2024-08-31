@@ -13,6 +13,7 @@
  *   - Rachel Tranchida
  */
 import { Sensor } from '../../sensors/entities/sensor.entity';
+import { Plant } from '../../plants/userPlants/entities/plant.entity';
 
 export class CreateUserDto {
   id: number;
@@ -23,4 +24,5 @@ export class CreateUserDto {
   createdAt: Date;
   updatedAt: Date;
   sensors: Sensor[];
+  plants: Plant[];
 }

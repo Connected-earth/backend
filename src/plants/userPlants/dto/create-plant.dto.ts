@@ -13,9 +13,13 @@
  *   - Rachel Tranchida
  */
 import { CreateAbstractPlantDto } from '../../abstractPlants/dto/create-abstractPlant.dto';
+import { User } from '../../../users/entities/user.entity';
+import { Sensor } from '../../../sensors/entities/sensor.entity';
+import { GeneralPlant } from '../../general-plants/entities/general-plant.entity';
 
 export class CreatePlantDto extends CreateAbstractPlantDto {
-  userId?: number;
-  sensorId: number;
+  user: User;
+  generalPlant: GeneralPlant;
+  sensor: Sensor;
   remark: string;
 }
