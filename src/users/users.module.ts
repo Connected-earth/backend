@@ -18,11 +18,15 @@ import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
+import { PlantsService } from '../plants/userPlants/plants.service';
+import { SensorsService } from '../sensors/sensors.service';
+import { Sensor } from '../sensors/entities/sensor.entity';
+import { Plant } from '../plants/userPlants/entities/plant.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User])],
+  imports: [TypeOrmModule.forFeature([User, Plant, Sensor])],
   controllers: [UsersController],
-  providers: [UsersService],
+  providers: [UsersService, PlantsService, SensorsService],
   exports: [UsersService],
 })
 export class UsersModule {}
