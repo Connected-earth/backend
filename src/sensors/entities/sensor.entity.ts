@@ -30,7 +30,9 @@ export class Sensor {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => User, (user) => user.sensors)
+  @ManyToOne(() => User, (user) => user.sensors, {
+    onDelete: 'CASCADE',
+  })
   user: User;
 
   @OneToOne(() => Plant, (plant) => plant.sensor)

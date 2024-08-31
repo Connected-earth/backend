@@ -28,10 +28,14 @@ import { GeneralPlant } from '../../general-plants/entities/general-plant.entity
 
 @Entity({ schema: 'plantkeeper_test' })
 export class Plant extends AbstractPlant {
+  /*
   @PrimaryGeneratedColumn()
   id: number;
+  */
 
-  @ManyToOne(() => User, (user) => user.sensors)
+  @ManyToOne(() => User, (user) => user.sensors, {
+    onDelete: 'CASCADE',
+  })
   user: User;
 
   @ManyToOne(() => GeneralPlant, (generalPlant) => generalPlant.plants)
