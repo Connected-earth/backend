@@ -18,6 +18,7 @@ import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '../users/entities/user.entity';
 import { JwtPayloadType } from './types/jwt-payload.type';
+import * as argon from 'argon2';
 
 @Injectable()
 export class AuthService {
@@ -27,12 +28,16 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, pass: string): Promise<any> {
-    const user = await this.usersService.findOneByMail(email);
-    if (user && user.password === pass) {
-      const { password, ...result } = user;
-      return result;
+    const user = (await this.usersService.findOneByMail(email)) as User;
+
+    const passwordMatch = await argon.verify(user.password, pass);
+
+    if (!passwordMatch) {
+      throw new UnauthorizedException();
     }
-    return null;
+    // TODO: créer un type afin que cela soit plus propre
+    const { password, ...result } = user;
+    return result;
   }
 
   async login(user: User) {
