@@ -5,8 +5,14 @@ import { UsersService } from '../users/users.service';
 import { PlantsService } from '../plants/userPlants/plants.service';
 import { SensorsService } from '../sensors/sensors.service';
 import { GeneralPlantsService } from '../plants/general-plants/general-plants.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { GeneralPlant } from '../plants/general-plants/entities/general-plant.entity';
+import { Plant } from '../plants/userPlants/entities/plant.entity';
+import { Sensor } from '../sensors/entities/sensor.entity';
+import { User } from '../users/entities/user.entity';
 
 @Module({
+  imports: [TypeOrmModule.forFeature([User, Sensor, Plant, GeneralPlant])],
   controllers: [SeedController],
   providers: [
     SeedService,
