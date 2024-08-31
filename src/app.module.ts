@@ -23,6 +23,7 @@ import { UsersModule } from './users/users.module';
 import { PlantsModule } from './plants/userPlants/plants.module';
 import { SensorsModule } from './sensors/sensors.module';
 import { GeneralPlantsModule } from './plants/general-plants/general-plants.module';
+import { SeedModule } from './seed/seed.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { GeneralPlantsModule } from './plants/general-plants/general-plants.modu
     PlantsModule,
     SensorsModule,
     GeneralPlantsModule,
+    SeedModule,
   ],
   controllers: [AppController],
   providers: [AppService],
