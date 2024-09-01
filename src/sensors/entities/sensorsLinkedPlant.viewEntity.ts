@@ -38,6 +38,9 @@ export class SensorsLinkedPlantView {
   sensorId: number;
 
   @ViewColumn()
+  sensorName: string;
+
+  @ViewColumn()
   sensorRemark: string;
 
   @ViewColumn()
