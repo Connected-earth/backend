@@ -23,6 +23,11 @@ import { Plant } from '../../plants/userPlants/entities/plant.entity';
     connection
       .createQueryBuilder()
       .select('sensor.id', 'sensorId')
+      .addSelect('sensor.name', 'sensorName')
+      .addSelect('sensor.remark', 'sensorRemark')
+      .addSelect('sensor.humidity', 'sensorHumidity')
+      .addSelect('sensor.light', 'sensorLight')
+      .addSelect('sensor.temperature', 'sensorTemperature')
       .addSelect('plant.id', 'plantId')
       .from(Sensor, 'sensor')
       .innerJoin(Plant, 'plant', 'plant.sensorId = sensor.id'),
@@ -30,6 +35,18 @@ import { Plant } from '../../plants/userPlants/entities/plant.entity';
 export class SensorsLinkedPlantView {
   @ViewColumn()
   sensorId: number;
+
+  @ViewColumn()
+  sensorRemark: string;
+
+  @ViewColumn()
+  sensorHumidity: number;
+
+  @ViewColumn()
+  sensorLight: number;
+
+  @ViewColumn()
+  sensorTemperature: number;
 
   @ViewColumn()
   plantId: number;
