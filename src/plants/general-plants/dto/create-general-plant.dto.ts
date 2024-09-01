@@ -16,6 +16,7 @@
 import { CreateAbstractPlantDto } from '../../abstractPlants/dto/create-abstractPlant.dto';
 
 export class CreateGeneralPlantDto extends CreateAbstractPlantDto {
+  type: string;
   humidity: number;
   ambientHumidity: number;
   light: number;

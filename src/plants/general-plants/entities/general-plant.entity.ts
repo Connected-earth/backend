@@ -20,6 +20,9 @@ import { Plant } from '../../userPlants/entities/plant.entity';
 @Entity({ schema: 'plantkeeper_test' })
 export class GeneralPlant extends AbstractPlant {
   @Column()
+  type: string;
+
+  @Column()
   humidity: number;
 
   @Column()

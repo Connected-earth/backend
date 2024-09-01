@@ -22,4 +22,5 @@ export class CreatePlantDto extends CreateAbstractPlantDto {
   generalPlant: GeneralPlant;
   sensor: Sensor;
   remark: string;
+  name: string;
 }
