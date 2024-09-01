@@ -13,7 +13,7 @@
  *   - Rachel Tranchida
  */
 
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateGeneralPlantDto } from './dto/create-general-plant.dto';
 import { UpdateGeneralPlantDto } from './dto/update-general-plant.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -27,8 +27,8 @@ export class GeneralPlantsService {
     private generalPlantsRepository: Repository<GeneralPlant>,
   ) {}
 
-  async create(createGeneralPlantDto: CreateGeneralPlantDto): Promise<void> {
-    await this.generalPlantsRepository.insert(createGeneralPlantDto);
+  create(createGeneralPlantDto: CreateGeneralPlantDto) {
+    return this.generalPlantsRepository.save(createGeneralPlantDto);
   }
 
   findAll(): Promise<GeneralPlant[]> {
@@ -39,11 +39,19 @@ export class GeneralPlantsService {
     return this.generalPlantsRepository.findOneBy({ id });
   }
 
-  async update(
-    id: number,
-    updateGeneralPlantDto: UpdateGeneralPlantDto,
-  ): Promise<void> {
-    await this.generalPlantsRepository.update(+id, updateGeneralPlantDto);
+  async update(id: number, updateGeneralPlantDto: UpdateGeneralPlantDto) {
+    const plant = (await this.findOne(id)) as GeneralPlant;
+
+    if (!plant) {
+      throw new UnauthorizedException(
+        'GeneralPlant does not exist. You need to create it before updating it',
+      );
+    }
+
+    return this.generalPlantsRepository.save({
+      ...plant,
+      ...updateGeneralPlantDto,
+    });
   }
 
   async remove(id: number): Promise<void> {

@@ -13,7 +13,7 @@
  *   - Rachel Tranchida
  */
 
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateSensorDto } from './dto/create-sensor.dto';
 import { UpdateSensorDto } from './dto/update-sensor.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -30,14 +30,7 @@ export class SensorsService {
     private sensorsLinkedPlantView: Repository<SensorsLinkedPlantView>,
   ) {}
 
-  async create(createSensorDto: CreateSensorDto): Promise<ObjectLiteral> {
-    /*
-    const result = (await this.sensorsRepository.insert(createSensorDto))
-      .generatedMaps[0];
-
-    return result;
-    */
-
+  create(createSensorDto: CreateSensorDto) {
     return this.sensorsRepository.save(createSensorDto);
   }
 
@@ -49,8 +42,16 @@ export class SensorsService {
     return this.sensorsRepository.findOneBy({ id });
   }
 
-  async update(id: number, updateSensorDto: UpdateSensorDto): Promise<void> {
-    await this.sensorsRepository.update(+id, updateSensorDto);
+  async update(id: number, updateSensorDto: UpdateSensorDto) {
+    const sensor = (await this.findOne(id)) as Sensor;
+
+    if (!sensor) {
+      throw new UnauthorizedException(
+        'Sensor does not exist. You need to create it before updating it',
+      );
+    }
+
+    return this.sensorsRepository.save({ ...sensor, ...updateSensorDto });
   }
 
   async remove(id: number): Promise<void> {

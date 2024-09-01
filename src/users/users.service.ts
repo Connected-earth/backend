@@ -13,7 +13,7 @@
  *   - Rachel Tranchida
  */
 
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -28,10 +28,10 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  async create(createUserDto: CreateUserDto): Promise<void> {
+  async create(createUserDto: CreateUserDto) {
     const password = await argon.hash(createUserDto.password);
     createUserDto.password = password;
-    await this.usersRepository.insert(createUserDto);
+    return this.usersRepository.save(createUserDto);
   }
 
   findAll(): Promise<User[]> {
@@ -51,8 +51,16 @@ export class UsersService {
     return this.usersRepository.findOneBy({ email });
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto): Promise<void> {
-    await this.usersRepository.update(+id, updateUserDto);
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    const user = (await this.findOne(id)) as User;
+
+    if (!user) {
+      throw new UnauthorizedException(
+        'User does not exist. You need to create it before updating it',
+      );
+    }
+
+    return this.usersRepository.save({ ...user, ...updateUserDto });
   }
 
   async remove(id: number): Promise<void> {

@@ -13,7 +13,7 @@
  *   - Rachel Tranchida
  */
 
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreatePlantDto } from './dto/create-plant.dto';
 import { UpdatePlantDto } from './dto/update-plant.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -27,8 +27,8 @@ export class PlantsService {
     private plantsRepository: Repository<Plant>,
   ) {}
 
-  async create(createPlantDto: CreatePlantDto): Promise<void> {
-    await this.plantsRepository.insert(createPlantDto);
+  create(createPlantDto: CreatePlantDto) {
+    return this.plantsRepository.save(createPlantDto);
   }
 
   findAll(): Promise<Plant[]> {
@@ -44,7 +44,15 @@ export class PlantsService {
   }
 
   async update(id: number, updatePlantDto: UpdatePlantDto) {
-    await this.plantsRepository.update(+id, updatePlantDto);
+    const plant = (await this.findOne(id)) as Plant;
+
+    if (!plant) {
+      throw new UnauthorizedException(
+        'Plant does not exist. You need to create it before updating it',
+      );
+    }
+
+    return this.plantsRepository.save({ ...plant, ...updatePlantDto });
   }
 
   async remove(id: number) {
