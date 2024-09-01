@@ -18,7 +18,7 @@ import { CreateSensorDto } from './dto/create-sensor.dto';
 import { UpdateSensorDto } from './dto/update-sensor.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Sensor } from './entities/sensor.entity';
-import { Repository } from 'typeorm';
+import { InsertResult, ObjectLiteral, Repository } from 'typeorm';
 import { SensorsLinkedPlantView } from './entities/sensorsLinkedPlant.viewEntity';
 
 @Injectable()
@@ -30,8 +30,15 @@ export class SensorsService {
     private sensorsLinkedPlantView: Repository<SensorsLinkedPlantView>,
   ) {}
 
-  async create(createSensorDto: CreateSensorDto): Promise<void> {
-    await this.sensorsRepository.insert(createSensorDto);
+  async create(createSensorDto: CreateSensorDto): Promise<ObjectLiteral> {
+    /*
+    const result = (await this.sensorsRepository.insert(createSensorDto))
+      .generatedMaps[0];
+
+    return result;
+    */
+
+    return this.sensorsRepository.save(createSensorDto);
   }
 
   findAll(): Promise<Sensor[]> {
