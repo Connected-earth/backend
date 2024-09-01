@@ -25,6 +25,8 @@ import { SensorsModule } from './sensors/sensors.module';
 import { GeneralPlantsModule } from './plants/general-plants/general-plants.module';
 import { SeedModule } from './seed/seed.module';
 import { SensorsLinkedPlantView } from './sensors/entities/sensorsLinkedPlant.viewEntity';
+import { APP_FILTER } from '@nestjs/core';
+import { DatabaseExceptionFilterException } from './db/databaseExceptionFilter.exception';
 
 @Module({
   imports: [
@@ -48,6 +50,12 @@ import { SensorsLinkedPlantView } from './sensors/entities/sensorsLinkedPlant.vi
     SeedModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_FILTER,
+      useClass: DatabaseExceptionFilterException,
+    },
+  ],
 })
 export class AppModule {}
