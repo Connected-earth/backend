@@ -22,9 +22,12 @@ import { PlantsService } from '../plants/userPlants/plants.service';
 import { SensorsService } from '../sensors/sensors.service';
 import { Sensor } from '../sensors/entities/sensor.entity';
 import { Plant } from '../plants/userPlants/entities/plant.entity';
+import { SensorsLinkedPlantView } from '../sensors/entities/sensorsLinkedPlant.viewEntity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Plant, Sensor])],
+  imports: [
+    TypeOrmModule.forFeature([User, Plant, Sensor, SensorsLinkedPlantView]),
+  ],
   controllers: [UsersController],
   providers: [UsersService, PlantsService, SensorsService],
   exports: [UsersService],

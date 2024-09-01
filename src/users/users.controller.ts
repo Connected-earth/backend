@@ -35,6 +35,7 @@ import { CreatePlantDto } from '../plants/userPlants/dto/create-plant.dto';
 import { PlantsService } from '../plants/userPlants/plants.service';
 import { CreateSensorDto } from '../sensors/dto/create-sensor.dto';
 import { SensorsService } from '../sensors/sensors.service';
+import { SensorsLinkedPlantView } from '../sensors/entities/sensorsLinkedPlant.viewEntity';
 
 @Controller('users')
 export class UsersController {
@@ -70,6 +71,28 @@ export class UsersController {
     }
 
     return user.sensors;
+  }
+
+  @Get('sensors/linkedPlant')
+  @UseGuards(JwtAuthGuard)
+  async findUserRelatedSensorsPlant(@Request() req: any) {
+    const user = (await this.findOne(req.user.id)) as User;
+
+    if (!user) {
+      throw new UnauthorizedException('This user is not found');
+    }
+
+    const sensorsLinked = [];
+    for (const sensor of user.sensors) {
+      const sensorPlant = (await this.sensorsService.findLinkedPlants(
+        sensor.id,
+      )) as SensorsLinkedPlantView;
+      if (sensorPlant === null) {
+        continue;
+      }
+      sensorsLinked.push(sensorPlant);
+    }
+    return sensorsLinked;
   }
 
   @Get('plants')

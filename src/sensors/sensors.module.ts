@@ -18,9 +18,10 @@ import { SensorsService } from './sensors.service';
 import { SensorsController } from './sensors.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Sensor } from './entities/sensor.entity';
+import { SensorsLinkedPlantView } from './entities/sensorsLinkedPlant.viewEntity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Sensor])],
+  imports: [TypeOrmModule.forFeature([Sensor, SensorsLinkedPlantView])],
   controllers: [SensorsController],
   providers: [SensorsService],
 })

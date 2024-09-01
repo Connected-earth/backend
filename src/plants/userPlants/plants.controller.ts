@@ -24,7 +24,6 @@ import {
   UseGuards,
   Request,
   UnauthorizedException,
-  Logger,
 } from '@nestjs/common';
 import { PlantsService } from './plants.service';
 import { CreatePlantDto } from './dto/create-plant.dto';

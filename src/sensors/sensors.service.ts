@@ -19,12 +19,15 @@ import { UpdateSensorDto } from './dto/update-sensor.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Sensor } from './entities/sensor.entity';
 import { Repository } from 'typeorm';
+import { SensorsLinkedPlantView } from './entities/sensorsLinkedPlant.viewEntity';
 
 @Injectable()
 export class SensorsService {
   constructor(
     @InjectRepository(Sensor)
     private sensorsRepository: Repository<Sensor>,
+    @InjectRepository(SensorsLinkedPlantView)
+    private sensorsLinkedPlantView: Repository<SensorsLinkedPlantView>,
   ) {}
 
   async create(createSensorDto: CreateSensorDto): Promise<void> {
@@ -45,5 +48,9 @@ export class SensorsService {
 
   async remove(id: number): Promise<void> {
     await this.sensorsRepository.delete(+id);
+  }
+
+  findLinkedPlants(sensorId: number) {
+    return this.sensorsLinkedPlantView.findOneBy({ sensorId });
   }
 }
