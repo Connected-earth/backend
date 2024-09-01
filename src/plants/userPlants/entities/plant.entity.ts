@@ -41,7 +41,9 @@ export class Plant extends AbstractPlant {
   @Column({ name: 'generalPlantId' })
   generalPlantId: number;
 
-  @ManyToOne(() => GeneralPlant, (generalPlant) => generalPlant.plants)
+  @ManyToOne(() => GeneralPlant, (generalPlant) => generalPlant.plants, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'generalPlantId' })
   generalPlant: GeneralPlant;
 

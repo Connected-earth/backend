@@ -17,7 +17,7 @@ import { AbstractPlant } from '../../abstractPlants/entity/abstractPlant.entity'
 import { Column, Entity, OneToMany } from 'typeorm';
 import { Plant } from '../../userPlants/entities/plant.entity';
 
-@Entity('plantkeeper_test')
+@Entity({ schema: 'plantkeeper_test' })
 export class GeneralPlant extends AbstractPlant {
   @Column()
   humidity: number;
