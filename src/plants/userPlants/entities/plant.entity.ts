@@ -54,4 +54,7 @@ export class Plant extends AbstractPlant {
 
   @Column()
   remark: string;
+
+  @Column()
+  name: string;
 }

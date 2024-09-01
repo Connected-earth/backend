@@ -15,8 +15,6 @@
 
 export abstract class CreateAbstractPlantDto {
   id: number;
-  type: string;
-  name: string;
   createdAt: Date;
   updatedAt: Date;
 }
