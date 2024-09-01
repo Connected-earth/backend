@@ -19,10 +19,12 @@ import { SensorsService } from './sensors.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Sensor } from './entities/sensor.entity';
 import { Repository } from 'typeorm';
+import { SensorsLinkedPlantView } from './entities/sensorsLinkedPlant.viewEntity';
 
 describe('SensorsController', () => {
   let controller: SensorsController;
   let sensorsRepository: Repository<Sensor>;
+  let sensorsLinkedPlant: Repository<SensorsLinkedPlantView>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -33,12 +35,19 @@ describe('SensorsController', () => {
           provide: getRepositoryToken(Sensor),
           useClass: Repository,
         },
+        {
+          provide: getRepositoryToken(SensorsLinkedPlantView),
+          useClass: Repository,
+        },
       ],
     }).compile();
 
     controller = module.get<SensorsController>(SensorsController);
     sensorsRepository = module.get<Repository<Sensor>>(
       getRepositoryToken(Sensor),
+    );
+    sensorsLinkedPlant = module.get<Repository<SensorsLinkedPlantView>>(
+      getRepositoryToken(SensorsLinkedPlantView),
     );
   });
 
