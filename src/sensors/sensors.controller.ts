@@ -21,10 +21,15 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
+  Request,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { SensorsService } from './sensors.service';
 import { CreateSensorDto } from './dto/create-sensor.dto';
 import { UpdateSensorDto } from './dto/update-sensor.dto';
+import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard';
+import { Sensor } from './entities/sensor.entity';
 
 @Controller('sensors')
 export class SensorsController {
@@ -41,7 +46,23 @@ export class SensorsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  @UseGuards(JwtAuthGuard)
+  async findOne(@Param('id') id: string, @Request() req: any) {
+    const sensor = (await this.sensorsService.findOne(+id)) as Sensor;
+
+    if (!sensor) {
+      throw new UnauthorizedException('Sensor not found');
+    }
+
+    const sensorsUser = req.user.sensors as Sensor[];
+    const isSensorUser = sensorsUser.some(
+      (sensorUser) => sensorUser.id === sensor.id,
+    );
+
+    if (!isSensorUser) {
+      throw new UnauthorizedException('You do not have access to this sensor');
+    }
+
     return this.sensorsService.findOne(+id);
   }
 
