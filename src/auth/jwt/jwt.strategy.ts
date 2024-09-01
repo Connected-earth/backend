@@ -31,7 +31,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       {
         jwtFromRequest: ExtractJwt.fromExtractors([
           ExtractJwt.fromAuthHeaderAsBearerToken(),
-          (request: Request): string => request.cookies.jwt,
+          (request: Request): string | null => {
+            return request.cookies ? request.cookies.jwt : null;
+          },
         ]),
         ignoreExpiration: false,
         secretOrKey: jwtConstants.secret,
@@ -47,10 +49,4 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       },
     );
   }
-  /*
-  async validate(payload: any) {
-    Logger.log(payload);
-    return { userId: payload.userId, email: payload.email };
-  }
-  */
 }
