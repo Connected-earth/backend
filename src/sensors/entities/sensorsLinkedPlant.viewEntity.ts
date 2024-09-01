@@ -29,6 +29,7 @@ import { Plant } from '../../plants/userPlants/entities/plant.entity';
       .addSelect('sensor.light', 'sensorLight')
       .addSelect('sensor.temperature', 'sensorTemperature')
       .addSelect('plant.id', 'plantId')
+      .addSelect('plant.name', 'plantName')
       .from(Sensor, 'sensor')
       .innerJoin(Plant, 'plant', 'plant.sensorId = sensor.id'),
 })
@@ -50,4 +51,7 @@ export class SensorsLinkedPlantView {
 
   @ViewColumn()
   plantId: number;
+
+  @ViewColumn()
+  plantName: string;
 }
