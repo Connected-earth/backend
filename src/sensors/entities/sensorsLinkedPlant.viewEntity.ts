@@ -31,7 +31,7 @@ import { Plant } from '../../plants/userPlants/entities/plant.entity';
       .addSelect('plant.id', 'plantId')
       .addSelect('plant.name', 'plantName')
       .from(Sensor, 'sensor')
-      .innerJoin(Plant, 'plant', 'plant.sensorId = sensor.id'),
+      .leftJoin(Plant, 'plant', 'plant.sensorId = sensor.id'),
 })
 export class SensorsLinkedPlantView {
   @ViewColumn()
