@@ -38,7 +38,11 @@ export class Plant extends AbstractPlant {
   })
   user: User;
 
+  @Column({ name: 'generalPlantId' })
+  generalPlantId: number;
+
   @ManyToOne(() => GeneralPlant, (generalPlant) => generalPlant.plants)
+  @JoinColumn({ name: 'generalPlantId' })
   generalPlant: GeneralPlant;
 
   @OneToOne(() => Sensor, (sensor) => sensor.plant, {
