@@ -47,6 +47,7 @@ export class Plant extends AbstractPlant {
 
   @OneToOne(() => Sensor, (sensor) => sensor.plant, {
     eager: true,
+    onDelete: 'CASCADE',
   })
   @JoinColumn()
   sensor: Sensor;

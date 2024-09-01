@@ -6,11 +6,14 @@ import { Sensor } from '../sensors/entities/sensor.entity';
 import { GeneralPlant } from '../plants/general-plants/entities/general-plant.entity';
 import { Plant } from '../plants/userPlants/entities/plant.entity';
 import { faker } from '@faker-js/faker';
+import * as argon from 'argon2';
 
 enum possibleRoles {
   Guess,
   Admin,
 }
+
+const passwordUsers = 'changeme';
 
 @Injectable()
 export class SeedService {
@@ -39,7 +42,7 @@ export class SeedService {
       const user = new User();
       user.username = faker.internet.userName();
       user.email = faker.internet.email();
-      user.password = faker.internet.password();
+      user.password = await argon.hash(passwordUsers);
       user.role = possibleRoles[Math.round(Math.random())];
       users.push(user);
     }
@@ -80,7 +83,7 @@ export class SeedService {
     const numPlants = 5;
     for (let i = 0; i < numPlants; i++) {
       const plant = new GeneralPlant();
-      plant.type = faker.lorem.word(2);
+      plant.type = faker.lorem.words(2);
       plant.name = faker.person.firstName();
       plant.humidity = faker.number.int({ min: 0, max: 100 });
       plant.ambientHumidity = faker.number.int({ min: 0, max: 100 });
@@ -116,7 +119,7 @@ export class SeedService {
     for (const user of users) {
       for (let i = 0; i < numPlants; i++) {
         const plant = new Plant();
-        plant.type = faker.lorem.word(2);
+        plant.type = faker.lorem.words(2);
         plant.name = faker.person.firstName();
         plant.user = user;
         const index = Math.floor(Math.random() * generalPlants.length);
