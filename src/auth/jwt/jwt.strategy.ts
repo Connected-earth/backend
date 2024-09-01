@@ -13,7 +13,7 @@
  *   - Rachel Tranchida
  */
 
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { jwtConstants } from '../constants';
@@ -27,26 +27,24 @@ type DoneCallback = (err: Error | null, user?: User | false) => void;
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(private authService: AuthService) {
-    super(
-      {
-        jwtFromRequest: ExtractJwt.fromExtractors([
-          ExtractJwt.fromAuthHeaderAsBearerToken(),
-          (request: Request): string | null => {
-            return request.cookies ? request.cookies.jwt : null;
-          },
-        ]),
-        ignoreExpiration: false,
-        secretOrKey: jwtConstants.secret,
-      },
-      async (payload: JwtPayloadType, done: DoneCallback) => {
-        try {
-          const user = await this.authService.validateJwtPayload(payload);
+    super({
+      jwtFromRequest: ExtractJwt.fromExtractors([
+        ExtractJwt.fromAuthHeaderAsBearerToken(),
+        (request: Request): string | null => {
+          return request.cookies ? request.cookies.jwt : null;
+        },
+      ]),
+      ignoreExpiration: false,
+      secretOrKey: jwtConstants.secret,
+    });
+  }
 
-          done(null, user);
-        } catch (error) {
-          done(error, false);
-        }
-      },
-    );
+  async validate(payload: JwtPayloadType) {
+    const user = await this.authService.validateJwtPayload(payload);
+
+    if (!user) {
+      throw new UnauthorizedException('Invalid token');
+    }
+    return user;
   }
 }
