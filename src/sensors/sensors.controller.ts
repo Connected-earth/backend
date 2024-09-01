@@ -75,4 +75,9 @@ export class SensorsController {
   remove(@Param('id') id: string) {
     return this.sensorsService.remove(+id);
   }
+
+  @Get(':id/linkedPlants')
+  findLinkedPlants(@Param('id') id: string) {
+    return this.sensorsService.findLinkedPlants(+id);
+  }
 }

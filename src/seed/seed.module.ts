@@ -10,9 +10,18 @@ import { GeneralPlant } from '../plants/general-plants/entities/general-plant.en
 import { Plant } from '../plants/userPlants/entities/plant.entity';
 import { Sensor } from '../sensors/entities/sensor.entity';
 import { User } from '../users/entities/user.entity';
+import { SensorsLinkedPlantView } from '../sensors/entities/sensorsLinkedPlant.viewEntity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Sensor, Plant, GeneralPlant])],
+  imports: [
+    TypeOrmModule.forFeature([
+      User,
+      Sensor,
+      Plant,
+      GeneralPlant,
+      SensorsLinkedPlantView,
+    ]),
+  ],
   controllers: [SeedController],
   providers: [
     SeedService,

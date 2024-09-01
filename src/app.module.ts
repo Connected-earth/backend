@@ -24,6 +24,7 @@ import { PlantsModule } from './plants/userPlants/plants.module';
 import { SensorsModule } from './sensors/sensors.module';
 import { GeneralPlantsModule } from './plants/general-plants/general-plants.module';
 import { SeedModule } from './seed/seed.module';
+import { SensorsLinkedPlantView } from './sensors/entities/sensorsLinkedPlant.viewEntity';
 
 @Module({
   imports: [
@@ -35,7 +36,7 @@ import { SeedModule } from './seed/seed.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [],
+      entities: [SensorsLinkedPlantView],
       autoLoadEntities: true,
       synchronize: true,
     }),
