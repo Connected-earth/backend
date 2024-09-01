@@ -24,6 +24,7 @@ import {
   UseGuards,
   Request,
   UnauthorizedException,
+  Put,
 } from '@nestjs/common';
 import { SensorsService } from './sensors.service';
 import { CreateSensorDto } from './dto/create-sensor.dto';
