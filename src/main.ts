@@ -20,7 +20,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api/v1');
   app.enableCors({
-    origin: '*', // allow requests from this origin
+    origin: 'https://plantkeeper.ch', // allow requests from this origin
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true, // if you need to include cookies or authorization headers
     allowedHeaders: 'Content-Type, Authorization',
