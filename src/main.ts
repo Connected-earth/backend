@@ -20,11 +20,21 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api/v1');
   app.enableCors({
-    origin: 'https://plantkeeper.ch', // allow requests from this origin
+    origin: (origin, callback) => {
+      const allowedOrigins = ['https://plantkeeper.ch'];
+
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    credentials: true, // if you need to include cookies or authorization headers
+    credentials: true,
     allowedHeaders: 'Content-Type, Authorization',
   });
+
   await app.listen(4000);
 }
+
 bootstrap();
