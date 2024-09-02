@@ -29,6 +29,7 @@ import { APP_FILTER } from '@nestjs/core';
 import { DatabaseExceptionFilterException } from './db/databaseExceptionFilter.exception';
 import { MailModule } from './mail/mail.module';
 import { MailerModule } from '@nestjs-modules/mailer';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 
 @Module({
   imports: [
@@ -46,19 +47,20 @@ import { MailerModule } from '@nestjs-modules/mailer';
     }),
     MailerModule.forRoot({
       transport: {
-        host: 'smtp.example.com',
-        port: 587,
-        secure: false, // upgrade later with STARTTLS
+        host: process.env.MAIL_HOST,
+        port: process.env.MAIL_PORT,
+        secure: process.env.MAIL_SECURE,
+        ignoreTLS: true,
         auth: {
-          user: 'username',
-          pass: 'password',
+          user: process.env.MAIL_USER,
+          pass: process.env.MAIL_PASS,
         },
       },
       defaults: {
-        from: '"nest-modules" <modules@nestjs.com>',
+        from: '"info@plantkeeper.ch" <info@plantkeeper.ch>',
       },
       template: {
-        dir: process.cwd() + '/templates/',
+        dir: process.cwd() + '/src/mail/templates/',
         adapter: new HandlebarsAdapter(), // or new PugAdapter()
         options: {
           strict: true,
