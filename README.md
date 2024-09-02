@@ -71,9 +71,12 @@ $ docker run --name db-image-postgres -e POSTGRES_PASSWORD=1234 -d -p 5432:5432 
 
 ![UML Diagram DB](./figures/db_uml.png)
 
-The database has 3 tables: `users`, `plant` and `sensor`. The `users` table stores the user's information, the `plant`
-table stores the information of all the plants registered by the users and the `sensor` table stores the information of
-all the sensors registered by the users.
+The database consists of the following five entities:
+- __User__: Represents an application user.
+- __Sensor__: Represents a sensor used to measure metrics of a plant.
+- __AbstractPlant__: An abstract entity representing a plant, serving as a base class for the `Plant` and `GeneralPlant` entities.
+- __Plant__: Represents a specific plant being monitored, derived from the `AbstractPlant` class.
+- __GeneralPlant__: Represents a generic plant type with predefined characteristics, also derived from the `AbstractPlant` class.
 
 ### Relational model
 
