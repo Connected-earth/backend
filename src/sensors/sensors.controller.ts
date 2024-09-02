@@ -74,14 +74,7 @@ export class SensorsController {
   }
 
   @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateSensorDto: UpdateSensorDto,
-    @Res({ passthrough: true }) res: Response,
-  ) {
-    const host = this.httpAdapterHost;
-    const httpAdapter = host.httpAdapter;
-    httpAdapter.setHeader(res, 'Access-Control-Allow-Origin', '*');
+  update(@Param('id') id: string, @Body() updateSensorDto: UpdateSensorDto) {
     return this.sensorsService.update(+id, updateSensorDto);
   }
 

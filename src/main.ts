@@ -19,7 +19,12 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api/v1');
-  app.enableCors();
+  app.enableCors({
+    origin: '*', // allow requests from this origin
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true, // if you need to include cookies or authorization headers
+    allowedHeaders: 'Content-Type, Authorization',
+  });
   await app.listen(4000);
 }
 bootstrap();
