@@ -26,6 +26,9 @@ export abstract class AbstractPlant {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column()
+  image: string;
+
   @CreateDateColumn()
   createdAt: Date;
 

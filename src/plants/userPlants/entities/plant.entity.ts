@@ -13,14 +13,7 @@
  *   - Rachel Tranchida
  */
 
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from 'typeorm';
 import { User } from '../../../users/entities/user.entity';
 import { Sensor } from '../../../sensors/entities/sensor.entity';
 import { AbstractPlant } from '../../abstractPlants/entity/abstractPlant.entity';
@@ -28,11 +21,6 @@ import { GeneralPlant } from '../../general-plants/entities/general-plant.entity
 
 @Entity({ schema: 'plantkeeper_test' })
 export class Plant extends AbstractPlant {
-  /*
-  @PrimaryGeneratedColumn()
-  id: number;
-  */
-
   @ManyToOne(() => User, (user) => user.sensors, {
     onDelete: 'CASCADE',
   })

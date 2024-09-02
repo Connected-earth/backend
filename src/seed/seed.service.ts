@@ -83,6 +83,7 @@ export class SeedService {
     const numPlants = 5;
     for (let i = 0; i < numPlants; i++) {
       const plant = new GeneralPlant();
+      plant.image = faker.image.urlPlaceholder();
       plant.type = faker.lorem.words(2);
       plant.humidity = faker.number.int({ min: 0, max: 100 });
       plant.ambientHumidity = faker.number.int({ min: 0, max: 100 });
@@ -118,6 +119,7 @@ export class SeedService {
     for (const user of users) {
       for (let i = 0; i < numPlants; i++) {
         const plant = new Plant();
+        plant.image = faker.image.urlPlaceholder();
         plant.name = faker.person.firstName();
         plant.user = user;
         const index = Math.floor(Math.random() * generalPlants.length);
