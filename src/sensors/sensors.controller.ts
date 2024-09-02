@@ -25,16 +25,22 @@ import {
   Request,
   UnauthorizedException,
   Put,
+  Res,
 } from '@nestjs/common';
 import { SensorsService } from './sensors.service';
 import { CreateSensorDto } from './dto/create-sensor.dto';
 import { UpdateSensorDto } from './dto/update-sensor.dto';
 import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard';
 import { Sensor } from './entities/sensor.entity';
+import { ExpressAdapter } from '@nestjs/platform-express';
+import { HttpAdapterHost } from '@nestjs/core';
 
 @Controller('sensors')
 export class SensorsController {
-  constructor(private readonly sensorsService: SensorsService) {}
+  constructor(
+    private readonly sensorsService: SensorsService,
+    private readonly httpAdapterHost: HttpAdapterHost<ExpressAdapter>,
+  ) {}
 
   @Post()
   create(@Body() createSensorDto: CreateSensorDto) {
@@ -68,7 +74,14 @@ export class SensorsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSensorDto: UpdateSensorDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateSensorDto: UpdateSensorDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const host = this.httpAdapterHost;
+    const httpAdapter = host.httpAdapter;
+    httpAdapter.setHeader(res, 'Access-Control-Allow-Origin', '*');
     return this.sensorsService.update(+id, updateSensorDto);
   }
 
