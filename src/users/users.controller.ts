@@ -144,7 +144,7 @@ export class UsersController {
   }
 
   @Patch()
-  @AuthGuard(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   updateMe(@Request() req: any, @Body() updateUserDto: UpdateUserDto) {
     const userId = req.user.id;
     return this.usersService.update(+userId, updateUserDto);
