@@ -27,6 +27,8 @@ import { SeedModule } from './seed/seed.module';
 import { SensorsLinkedPlantView } from './sensors/entities/sensorsLinkedPlant.viewEntity';
 import { APP_FILTER } from '@nestjs/core';
 import { DatabaseExceptionFilterException } from './db/databaseExceptionFilter.exception';
+import { MailModule } from './mail/mail.module';
+import { MailerModule } from '@nestjs-modules/mailer';
 
 @Module({
   imports: [
@@ -42,12 +44,34 @@ import { DatabaseExceptionFilterException } from './db/databaseExceptionFilter.e
       autoLoadEntities: true,
       synchronize: true,
     }),
+    MailerModule.forRoot({
+      transport: {
+        host: 'smtp.example.com',
+        port: 587,
+        secure: false, // upgrade later with STARTTLS
+        auth: {
+          user: 'username',
+          pass: 'password',
+        },
+      },
+      defaults: {
+        from: '"nest-modules" <modules@nestjs.com>',
+      },
+      template: {
+        dir: process.cwd() + '/templates/',
+        adapter: new HandlebarsAdapter(), // or new PugAdapter()
+        options: {
+          strict: true,
+        },
+      },
+    }),
     AuthModule,
     UsersModule,
     PlantsModule,
     SensorsModule,
     GeneralPlantsModule,
     SeedModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [
