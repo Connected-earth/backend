@@ -78,7 +78,7 @@ describe('UsersController', () => {
     );
     userPlantsLinkedGeneralPlant = module.get<
       Repository<UserPlantsLinkedGeneralPlantsViewEntity>>
-    (getRepositoryToken(SensorsLinkedPlantView),
+    (getRepositoryToken(UserPlantsLinkedGeneralPlantsViewEntity),
     );
   });
 

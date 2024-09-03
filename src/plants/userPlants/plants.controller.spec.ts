@@ -48,7 +48,7 @@ describe('PlantsController', () => {
 
     userPlantsLinkedGeneralPlants = module.get<
       Repository<UserPlantsLinkedGeneralPlantsViewEntity>
-    >(getRepositoryToken(SensorsLinkedPlantView),
+    >(getRepositoryToken(UserPlantsLinkedGeneralPlantsViewEntity),
       );
   });
 
