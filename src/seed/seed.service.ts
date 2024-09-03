@@ -79,31 +79,88 @@ export class SeedService {
   }
 
   async seedGeneralPlants() {
-    const plants = [];
-    const numPlants = 5;
-    for (let i = 0; i < numPlants; i++) {
-      const plant = new GeneralPlant();
-      plant.image = faker.image.urlPlaceholder();
-      plant.type = faker.lorem.words(2);
-      plant.humidityMin = faker.number.int({ min: 0, max: 50 });
-      plant.humidityMax = faker.number.int({ min: 51, max: 100 });
-      plant.ambientHumidityMin = faker.number.int({ min: 0, max: 50 });
-      plant.ambientHumidityMax = faker.number.int({ min: 51, max: 100 });
-      plant.lightMin = faker.number.int({ min: 160, max: 400 });
-      plant.lightMax = faker.number.int({ min: 400, max: 800 });
-      plant.temperatureMin = faker.number.float({
-        min: -10,
-        max: 15,
-        fractionDigits: 2,
-      });
-      plant.temperatureMax = faker.number.float({
-        min: 16,
-        max: 40,
-        fractionDigits: 2,
-      });
-      plant.description = faker.lorem.paragraphs({ min: 3, max: 7 });
-      plants.push(plant);
-    }
+    const plants = [
+      {
+        type: 'Monstera',
+        humidityMin: 4,
+        humidityMax: 6,
+        ambientHumidityMin: 60,
+        ambientHumidityMax: 80,
+        lightMin: 500,
+        lightMax: 1500,
+        temperatureMin: 18.0,
+        temperatureMax: 27.0,
+        soilMoistureMin: 4,
+        soilMoistureMax: 6,
+        image: 'monstera.png',
+        description:
+          'Monstera, native to the tropical rainforests of Central and South America, is known for its large, glossy leaves with unique natural holes. It is a popular indoor plant due to its ability to thrive in a variety of indoor conditions.',
+      },
+      {
+        type: 'Philodendron',
+        humidityMin: 4,
+        humidityMax: 6,
+        ambientHumidityMin: 60,
+        ambientHumidityMax: 80,
+        lightMin: 250,
+        lightMax: 700,
+        temperatureMin: 15.0,
+        temperatureMax: 24.0,
+        soilMoistureMin: 4,
+        soilMoistureMax: 6,
+        image: 'philodendron.jpg',
+        description:
+          'Philodendron plants are native to the tropical regions of the Americas. They are prized for their beautiful, heart-shaped leaves and are easy to grow, making them a favorite choice for indoor gardening enthusiasts.',
+      },
+      {
+        type: 'Calathea',
+        humidityMin: 5,
+        humidityMax: 7,
+        ambientHumidityMin: 55,
+        ambientHumidityMax: 70,
+        lightMin: 500,
+        lightMax: 800,
+        temperatureMin: 13.0,
+        temperatureMax: 21.0,
+        soilMoistureMin: 5,
+        soilMoistureMax: 7,
+        image: 'calathea.png',
+        description:
+          'Calathea, originating from the tropical Americas, is known for its vibrant, patterned foliage. These plants prefer high humidity and indirect light, making them well-suited for indoor environments.',
+      },
+      {
+        type: 'Aloe Vera',
+        humidityMin: 1,
+        humidityMax: 3,
+        ambientHumidityMin: 40,
+        ambientHumidityMax: 50,
+        lightMin: 700,
+        lightMax: 1500,
+        temperatureMin: 13.0,
+        temperatureMax: 27.0,
+        soilMoistureMin: 1,
+        soilMoistureMax: 3,
+        image: 'aloe_vera.jpg',
+        description:
+          'Aloe Vera, native to the Arabian Peninsula, is a succulent plant species that is widely cultivated for its medicinal properties. It prefers dry, warm environments and is a common houseplant due to its low maintenance needs.',
+      },
+      {
+        type: 'Pothos',
+        humidityMin: 4,
+        humidityMax: 6,
+        ambientHumidityMin: 50,
+        ambientHumidityMax: 70,
+        lightMin: 250,
+        lightMax: 700,
+        temperatureMin: 15.0,
+        temperatureMax: 29.0,
+        soilMoistureMin: 4,
+        soilMoistureMax: 6,
+        image: 'pothos.png',
+        description:
+          "Pothos, also known as Devil's Ivy, is a tropical vine native to the Solomon Islands. It is extremely resilient and can thrive in a variety of conditions, making it a popular choice for both beginner and experienced plant enthusiasts.",
+      },
+    ];
 
     await this.generalPlantsRepository.save(plants);
   }
