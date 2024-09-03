@@ -23,13 +23,22 @@ export class GeneralPlant extends AbstractPlant {
   type: string;
 
   @Column()
-  humidity: number;
+  humidityMin: number;
 
   @Column()
-  ambientHumidity: number;
+  humidityMax: number;
 
   @Column()
-  light: number;
+  ambientHumidityMin: number;
+
+  @Column()
+  ambientHumidityMax: number;
+
+  @Column()
+  lightMin: number;
+
+  @Column()
+  lightMax: number;
 
   @Column('float8')
   temperatureMin: number;

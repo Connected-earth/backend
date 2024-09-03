@@ -85,9 +85,12 @@ export class SeedService {
       const plant = new GeneralPlant();
       plant.image = faker.image.urlPlaceholder();
       plant.type = faker.lorem.words(2);
-      plant.humidity = faker.number.int({ min: 0, max: 100 });
-      plant.ambientHumidity = faker.number.int({ min: 0, max: 100 });
-      plant.light = faker.number.int({ min: 160, max: 800 });
+      plant.humidityMin = faker.number.int({ min: 0, max: 50 });
+      plant.humidityMax = faker.number.int({ min: 51, max: 100 });
+      plant.ambientHumidityMin = faker.number.int({ min: 0, max: 50 });
+      plant.ambientHumidityMax = faker.number.int({ min: 51, max: 100 });
+      plant.lightMin = faker.number.int({ min: 160, max: 400 });
+      plant.lightMax = faker.number.int({ min: 400, max: 800 });
       plant.temperatureMin = faker.number.float({
         min: -10,
         max: 15,
