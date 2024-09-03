@@ -36,6 +36,7 @@ import { PlantsService } from '../plants/userPlants/plants.service';
 import { CreateSensorDto } from '../sensors/dto/create-sensor.dto';
 import { SensorsService } from '../sensors/sensors.service';
 import { SensorsLinkedPlantView } from '../sensors/entities/sensorsLinkedPlant.viewEntity';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('users')
 export class UsersController {
@@ -140,6 +141,13 @@ export class UsersController {
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(+id, updateUserDto);
+  }
+
+  @Patch()
+  @UseGuards(JwtAuthGuard)
+  updateMe(@Request() req: any, @Body() updateUserDto: UpdateUserDto) {
+    const userId = req.user.id;
+    return this.usersService.update(+userId, updateUserDto);
   }
 
   @Delete(':id')

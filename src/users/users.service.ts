@@ -13,7 +13,7 @@
  *   - Rachel Tranchida
  */
 
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -47,7 +47,7 @@ export class UsersService {
     return this.usersRepository.findOneBy({ id });
   }
 
-  findOneByMail(email: string): Promise<User | null> {
+  async findOneByMail(email: string): Promise<User | null> {
     return this.usersRepository.findOneBy({ email });
   }
 

@@ -30,6 +30,8 @@ export class AuthService {
   async validateUser(email: string, pass: string): Promise<any> {
     const user = (await this.usersService.findOneByMail(email)) as User;
 
+    Logger.log(user);
+
     const passwordMatch = await argon.verify(user.password, pass);
 
     if (!passwordMatch) {
