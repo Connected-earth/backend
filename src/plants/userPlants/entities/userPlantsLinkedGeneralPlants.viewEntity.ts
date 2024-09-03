@@ -29,6 +29,7 @@ import { Sensor } from '../../../sensors/entities/sensor.entity';
       .addSelect('plant.sensorId', 'plantSensorId')
       .addSelect('plant.sensor', 'sensor')
       .addSelect('generalPlant.id', 'generalPlantId')
+      .addSelect('generalPlant.image', 'generalPlantImage')
       .addSelect('generalPlant.type', 'generalPlantType')
       .addSelect('generalPlant.humidityMin', 'generalPlantHumidityMin')
       .addSelect('generalPlant.humidityMax', 'generalPlantHumidityMax')
@@ -73,6 +74,9 @@ export class UserPlantsLinkedGeneralPlantsViewEntity {
 
   @ViewColumn()
   generalPlantId: number;
+
+  @ViewColumn()
+  generalPlantImage: string;
 
   @ViewColumn()
   generalPlantType: string;
