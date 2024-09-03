@@ -18,9 +18,12 @@ import { PlantsService } from './plants.service';
 import { PlantsController } from './plants.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Plant } from './entities/plant.entity';
+import { UserPlantsLinkedGeneralPlantsViewEntity } from './entities/userPlantsLinkedGeneralPlants.viewEntity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Plant])],
+  imports: [
+    TypeOrmModule.forFeature([Plant, UserPlantsLinkedGeneralPlantsViewEntity]),
+  ],
   controllers: [PlantsController],
   providers: [PlantsService],
 })

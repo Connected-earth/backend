@@ -19,11 +19,13 @@ import { PlantsService } from './plants.service';
 import { Plant } from './entities/plant.entity';
 import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { UserPlantsLinkedGeneralPlantsViewEntity } from './entities/userPlantsLinkedGeneralPlants.viewEntity';
+import { SensorsLinkedPlantView } from '../../sensors/entities/sensorsLinkedPlant.viewEntity';
 
 describe('PlantsController', () => {
   let controller: PlantsController;
   let plantsRepository: Repository<Plant>;
-
+  let userPlantsLinkedGeneralPlants: Repository<UserPlantsLinkedGeneralPlantsViewEntity>;
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [PlantsController],
@@ -33,11 +35,21 @@ describe('PlantsController', () => {
           provide: getRepositoryToken(Plant),
           useClass: Repository,
         },
+        {
+          provide: getRepositoryToken(UserPlantsLinkedGeneralPlantsViewEntity),
+          useClass: Repository,
+        },
       ],
     }).compile();
 
     controller = module.get<PlantsController>(PlantsController);
-    plantsRepository = module.get<Repository<Plant>>(getRepositoryToken(Plant));
+    plantsRepository = module.get<Repository<Plant>>(getRepositoryToken(Plant),
+      );
+
+    userPlantsLinkedGeneralPlants = module.get<
+      Repository<UserPlantsLinkedGeneralPlantsViewEntity>
+    >(getRepositoryToken(SensorsLinkedPlantView),
+      );
   });
 
   it('should be defined', () => {

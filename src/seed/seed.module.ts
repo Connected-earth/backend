@@ -11,6 +11,7 @@ import { Plant } from '../plants/userPlants/entities/plant.entity';
 import { Sensor } from '../sensors/entities/sensor.entity';
 import { User } from '../users/entities/user.entity';
 import { SensorsLinkedPlantView } from '../sensors/entities/sensorsLinkedPlant.viewEntity';
+import { UserPlantsLinkedGeneralPlantsViewEntity } from '../plants/userPlants/entities/userPlantsLinkedGeneralPlants.viewEntity';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { SensorsLinkedPlantView } from '../sensors/entities/sensorsLinkedPlant.v
       Plant,
       GeneralPlant,
       SensorsLinkedPlantView,
+      UserPlantsLinkedGeneralPlantsViewEntity,
     ]),
   ],
   controllers: [SeedController],

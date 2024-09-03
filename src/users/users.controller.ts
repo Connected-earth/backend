@@ -37,6 +37,9 @@ import { CreateSensorDto } from '../sensors/dto/create-sensor.dto';
 import { SensorsService } from '../sensors/sensors.service';
 import { SensorsLinkedPlantView } from '../sensors/entities/sensorsLinkedPlant.viewEntity';
 import { AuthGuard } from '@nestjs/passport';
+import {
+  UserPlantsLinkedGeneralPlantsViewEntity
+} from '../plants/userPlants/entities/userPlantsLinkedGeneralPlants.viewEntity';
 
 @Controller('users')
 export class UsersController {
@@ -94,6 +97,28 @@ export class UsersController {
       sensorsLinked.push(sensorPlant);
     }
     return sensorsLinked;
+  }
+
+  @Get('plants/linkedGeneralPlant')
+  @UseGuards(JwtAuthGuard)
+  async findUserRelatedGeneralPlants(@Request() req: any) {
+    const user = (await this.findOne(req.user.id)) as User;
+
+    if (!user) {
+      throw new UnauthorizedException('This user is not found');
+    }
+
+    const generalPlantsLinked = [];
+    for (const plant of user.plants) {
+      const generalPlantPlant = (await this.plantsService.findLinkedGeneralPlants(
+          plant.id,
+      )) as UserPlantsLinkedGeneralPlantsViewEntity;
+      if (generalPlantPlant === null) {
+        continue;
+      }
+      generalPlantsLinked.push(generalPlantPlant);
+    }
+    return generalPlantsLinked;
   }
 
   @Get('plants')
