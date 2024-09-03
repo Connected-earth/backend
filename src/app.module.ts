@@ -30,6 +30,7 @@ import { DatabaseExceptionFilterException } from './db/databaseExceptionFilter.e
 import { MailModule } from './mail/mail.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { UserPlantsLinkedGeneralPlantsViewEntity } from './plants/userPlants/entities/userPlantsLinkedGeneralPlants.viewEntity';
 
 @Module({
   imports: [
@@ -41,7 +42,10 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [SensorsLinkedPlantView],
+      entities: [
+        SensorsLinkedPlantView,
+        UserPlantsLinkedGeneralPlantsViewEntity,
+      ],
       autoLoadEntities: true,
       synchronize: true,
     }),

@@ -24,6 +24,9 @@ import { Sensor } from '../sensors/entities/sensor.entity';
 import { PlantsService } from '../plants/userPlants/plants.service';
 import { SensorsService } from '../sensors/sensors.service';
 import { SensorsLinkedPlantView } from '../sensors/entities/sensorsLinkedPlant.viewEntity';
+import {
+  UserPlantsLinkedGeneralPlantsViewEntity
+} from '../plants/userPlants/entities/userPlantsLinkedGeneralPlants.viewEntity';
 
 describe('UsersController', () => {
   let controller: UsersController;
@@ -31,6 +34,7 @@ describe('UsersController', () => {
   let plantsRepository: Repository<Plant>;
   let sensorsRepository: Repository<Sensor>;
   let sensorsLinkedPlant: Repository<SensorsLinkedPlantView>;
+  let userPlantsLinkedGeneralPlant: Repository<UserPlantsLinkedGeneralPlantsViewEntity>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -46,6 +50,10 @@ describe('UsersController', () => {
           provide: getRepositoryToken(Plant),
           useClass: Repository,
         },
+        {
+          provide: getRepositoryToken(UserPlantsLinkedGeneralPlantsViewEntity),
+          useClass: Repository,
+        },
         SensorsService,
         {
           provide: getRepositoryToken(Sensor),
@@ -55,6 +63,7 @@ describe('UsersController', () => {
           provide: getRepositoryToken(SensorsLinkedPlantView),
           useClass: Repository,
         },
+
       ],
     }).compile();
 
@@ -66,6 +75,10 @@ describe('UsersController', () => {
     );
     sensorsLinkedPlant = module.get<Repository<SensorsLinkedPlantView>>(
       getRepositoryToken(SensorsLinkedPlantView),
+    );
+    userPlantsLinkedGeneralPlant = module.get<
+      Repository<UserPlantsLinkedGeneralPlantsViewEntity>>
+    (getRepositoryToken(UserPlantsLinkedGeneralPlantsViewEntity),
     );
   });
 
