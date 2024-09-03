@@ -94,7 +94,7 @@ export class SeedService {
         soilMoistureMax: 6,
         image: 'monstera.png',
         description:
-          'Monstera, native to the tropical rainforests of Central and South America, is known for its large, glossy leaves with unique natural holes. It is a popular indoor plant due to its ability to thrive in a variety of indoor conditions.',
+          'Monstera, or Swiss Cheese Plant, originates from Central and South American rainforests. It prefers bright, indirect light and high humidity, mimicking its natural habitat. Well-draining soil is essential, and watering should occur when the top inch is dry. Its iconic large leaves with natural holes require space to grow. Support with a moss pole or trellis encourages vertical growth. Monstera is a fast grower, easy to propagate, and adapts well to indoor environments, making it a popular houseplant.',
       },
       {
         type: 'Philodendron',
@@ -110,7 +110,7 @@ export class SeedService {
         soilMoistureMax: 6,
         image: 'philodendron.jpg',
         description:
-          'Philodendron plants are native to the tropical regions of the Americas. They are prized for their beautiful, heart-shaped leaves and are easy to grow, making them a favorite choice for indoor gardening enthusiasts.',
+          ' Native to the tropical Americas, Philodendrons are versatile plants that adapt well to indoor conditions. They thrive in bright, indirect light but can tolerate low light. These plants prefer well-draining soil and should be watered when the top inch is dry. They enjoy moderate humidity and benefit from occasional misting. Philodendrons come in various forms, including climbing and non-climbing types, and their heart-shaped leaves add a touch of green elegance to any room. They’re easy to care for and propagate, making them popular among plant enthusiasts.',
       },
       {
         type: 'Calathea',
@@ -126,7 +126,7 @@ export class SeedService {
         soilMoistureMax: 7,
         image: 'calathea.png',
         description:
-          'Calathea, originating from the tropical Americas, is known for its vibrant, patterned foliage. These plants prefer high humidity and indirect light, making them well-suited for indoor environments.',
+          'Native to the tropical Americas, Calathea is celebrated for its vibrant, patterned foliage. It thrives in high humidity and indirect light, making it perfect for indoor environments like bathrooms. Keep its soil consistently moist but not waterlogged, and use distilled water to avoid leaf spots from minerals. Calatheas prefer warm temperatures and do not tolerate drafts or sudden temperature changes. Regular misting and a humidity tray can help maintain the humidity it needs, and occasional pruning keeps the plant healthy.',
       },
       {
         type: 'Aloe Vera',
@@ -142,7 +142,7 @@ export class SeedService {
         soilMoistureMax: 3,
         image: 'aloe_vera.jpg',
         description:
-          'Aloe Vera, native to the Arabian Peninsula, is a succulent plant species that is widely cultivated for its medicinal properties. It prefers dry, warm environments and is a common houseplant due to its low maintenance needs.',
+          'Aloe Vera originates from the Arabian Peninsula but is found in various warm climates worldwide. This succulent plant prefers bright, indirect sunlight and well-draining soil, making it ideal for indoor or outdoor settings with minimal watering. Allow the soil to dry out between waterings. Aloe Vera is well-known for its medicinal gel, which is used to treat burns and skin irritations. The plant is easy to care for, thriving in warm temperatures and tolerating some neglect, making it a popular choice for home gardens.',
       },
       {
         type: 'Pothos',
@@ -158,7 +158,7 @@ export class SeedService {
         soilMoistureMax: 6,
         image: 'pothos.png',
         description:
-          "Pothos, also known as Devil's Ivy, is a tropical vine native to the Solomon Islands. It is extremely resilient and can thrive in a variety of conditions, making it a popular choice for both beginner and experienced plant enthusiasts.",
+          "Originating from Southeast Asia, Pothos is a hardy, low-maintenance plant ideal for beginners. It can thrive in various light conditions, from low to bright indirect light, and prefers well-draining soil. Water when the top inch of soil dries out, and Pothos will tolerate some neglect. It's known for its trailing vines and heart-shaped leaves, making it a popular choice for hanging baskets. Pothos is also valued for its air-purifying qualities, removing toxins like formaldehyde from the air, contributing to a healthier indoor environment.",
       },
     ];
 
