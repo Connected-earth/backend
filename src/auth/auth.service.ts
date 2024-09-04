@@ -28,8 +28,12 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, pass: string): Promise<any> {
-    const user = (await this.usersService.findOneByMail(email)) as User;
-
+    const user = (await this.usersService.findOneByMail(
+      email.toLowerCase(),
+    )) as User;
+    if (!user) {
+      throw new UnauthorizedException();
+    }
     Logger.log(user);
 
     const passwordMatch = await argon.verify(user.password, pass);
@@ -45,7 +49,7 @@ export class AuthService {
   async login(user: User) {
     const payload: JwtPayloadType = {
       sub: String(user.id),
-      email: user.email,
+      email: user.email.toLowerCase(),
       username: user.username,
       role: user.role,
     };

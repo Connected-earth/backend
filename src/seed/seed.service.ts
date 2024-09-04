@@ -41,7 +41,7 @@ export class SeedService {
     for (let i = 0; i < numUsers; i++) {
       const user = new User();
       user.username = faker.internet.userName();
-      user.email = faker.internet.email();
+      user.email = faker.internet.email().toLowerCase();
       user.password = await argon.hash(passwordUsers);
       user.role = possibleRoles[Math.round(Math.random())];
       users.push(user);

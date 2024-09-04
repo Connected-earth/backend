@@ -29,8 +29,7 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    const password = await argon.hash(createUserDto.password);
-    createUserDto.password = password;
+    createUserDto.password = await argon.hash(createUserDto.password);
     return this.usersRepository.save(createUserDto);
   }
 
@@ -58,6 +57,9 @@ export class UsersService {
       throw new UnauthorizedException(
         'User does not exist. You need to create it before updating it',
       );
+    }
+    if (updateUserDto.email) {
+      updateUserDto.email = updateUserDto.email.toLowerCase();
     }
 
     return this.usersRepository.save({ ...user, ...updateUserDto });

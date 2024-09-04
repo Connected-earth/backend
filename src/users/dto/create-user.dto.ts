@@ -14,10 +14,12 @@
  */
 import { Sensor } from '../../sensors/entities/sensor.entity';
 import { Plant } from '../../plants/userPlants/entities/plant.entity';
+import { Lowercase } from '../../common/decorators/lowercase';
 
 export class CreateUserDto {
   id: number;
   name: string;
+  @Lowercase()
   email: string;
   password: string;
   role: string;
