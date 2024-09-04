@@ -31,7 +31,8 @@ import { Plant } from '../../plants/userPlants/entities/plant.entity';
       .addSelect('plant.id', 'plantId')
       .addSelect('plant.name', 'plantName')
       .from(Sensor, 'sensor')
-      .leftJoin(Plant, 'plant', 'plant.sensorId = sensor.id'),
+      .leftJoin(Plant, 'plant', 'plant.sensorId = sensor.id')
+      .orderBy('sensor.id', 'ASC'),
 })
 export class SensorsLinkedPlantView {
   @ViewColumn()
