@@ -17,6 +17,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -30,9 +31,13 @@ export class Sensor {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ name: 'userId' })
+  userId: number;
+
   @ManyToOne(() => User, (user) => user.sensors, {
     onDelete: 'CASCADE',
   })
+  @JoinColumn({ name: 'userId' })
   user: User;
 
   @OneToOne(() => Plant, (plant) => plant.sensor)
