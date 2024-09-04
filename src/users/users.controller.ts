@@ -117,7 +117,7 @@ export class UsersController {
     const generalPlantsLinked = [];
     for (const plant of user.plants) {
       const generalPlantPlant = (await this.plantsService.findLinkedGeneralPlants(
-          plant.id,
+        plant.id,
       )) as UserPlantsLinkedGeneralPlantsViewEntity;
       if (generalPlantPlant === null) {
         continue;
@@ -169,12 +169,7 @@ export class UsersController {
     return this.usersService.findOneByMail(email);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
-  }
-
-  @Patch()
+  @Patch('me')
   @UseGuards(JwtAuthGuard)
   updateMe(@Request() req: any, @Body() updateUserDto: UpdateUserDto) {
     const userId = req.user.id;
