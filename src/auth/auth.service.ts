@@ -19,6 +19,7 @@ import { JwtService } from '@nestjs/jwt';
 import { User } from '../users/entities/user.entity';
 import { JwtPayloadType } from './types/jwt-payload.type';
 import * as argon from 'argon2';
+import * as crypto from 'crypto';
 
 @Injectable()
 export class AuthService {
@@ -58,7 +59,18 @@ export class AuthService {
     if (!user) {
       throw new UnauthorizedException();
     }
-    Logger.log('from validateJwtPayload:\n' + user.id);
+    return user;
+  }
+
+  async validateToken(value: string) {
+    // const hash = crypto.createHash('sha256').update(value).digest('hex');
+
+    const user = (await this.usersService.findOneByHash(value)) as User;
+
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+
     return user;
   }
 }

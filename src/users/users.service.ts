@@ -13,13 +13,15 @@
  *   - Rachel Tranchida
  */
 
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import * as argon from 'argon2';
+import { tokens } from '../tokens/tokens.array';
+import { Token } from '../tokens/entities/token.entity';
 
 @Injectable()
 export class UsersService {
@@ -65,5 +67,20 @@ export class UsersService {
 
   async remove(id: number): Promise<void> {
     await this.usersRepository.delete(+id);
+  }
+
+  async findOneByHash(hash: string) {
+    const token = tokens.find((token) => token.hash === hash) as Token;
+
+    Logger.log(hash);
+    Logger.log(tokens);
+
+    Logger.log(token);
+
+    if (!token) {
+      throw new UnauthorizedException('This token does not exist');
+    }
+
+    return (await this.findOne(token.id)) as User;
   }
 }

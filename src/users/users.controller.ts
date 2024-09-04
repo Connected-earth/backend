@@ -36,6 +36,8 @@ import { PlantsService } from '../plants/userPlants/plants.service';
 import { CreateSensorDto } from '../sensors/dto/create-sensor.dto';
 import { SensorsService } from '../sensors/sensors.service';
 import { SensorsLinkedPlantView } from '../sensors/entities/sensorsLinkedPlant.viewEntity';
+import { TokenAuthGuard } from '../auth/token/token-auth.guard';
+import { JwtOrTokenAuthGuard } from '../auth/jwt-or-token/jwt-or-token-auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -51,6 +53,7 @@ export class UsersController {
   }
 
   @Get()
+  @UseGuards(JwtOrTokenAuthGuard)
   findAll() {
     return this.usersService.findAll();
   }
