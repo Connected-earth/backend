@@ -19,11 +19,18 @@ import { Repository } from 'typeorm';
 import { Sensor } from './entities/sensor.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { SensorsLinkedPlantView } from './entities/sensorsLinkedPlant.viewEntity';
+import { UserPlantsLinkedGeneralPlantsViewEntity } from '../plants/userPlants/entities/userPlantsLinkedGeneralPlants.viewEntity';
+import { MailService } from '../mail/mail.service';
+import { UsersService } from '../users/users.service';
+import { MailerService } from '@nestjs-modules/mailer';
+import { User } from '../users/entities/user.entity';
 
 describe('SensorsService', () => {
   let service: SensorsService;
   let sensorsRepository: Repository<Sensor>;
   let sensorsLinkedPlant: Repository<SensorsLinkedPlantView>;
+  let usersLinkedView: Repository<UserPlantsLinkedGeneralPlantsViewEntity>;
+  let usersRepository: Repository<User>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -35,6 +42,22 @@ describe('SensorsService', () => {
         },
         {
           provide: getRepositoryToken(SensorsLinkedPlantView),
+          useClass: Repository,
+        },
+        {
+          provide: getRepositoryToken(UserPlantsLinkedGeneralPlantsViewEntity),
+          useClass: Repository,
+        },
+        MailService,
+        {
+          provide: MailerService,
+          useValue: {
+            sendMail: jest.fn(),
+          },
+        },
+        UsersService,
+        {
+          provide: getRepositoryToken(User),
           useClass: Repository,
         },
       ],
