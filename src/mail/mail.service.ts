@@ -1,17 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
 import { User } from '../users/entities/user.entity';
-import { UpdateUserDto } from '../users/dto/update-user.dto';
 
 @Injectable()
 export class MailService {
   constructor(private readonly mailerService: MailerService) {}
 
-  public async sendAlertMail(user: User) {
+  public async sendAlertMail(user: User, plantName: string) {
     await this.mailerService
       .sendMail({
         to: user.email,
-        subject: 'One of your plants need attention!',
+        subject: `${plantName} needs attention!`,
         template: 'alertEmail',
         context: {
           code: user.id,

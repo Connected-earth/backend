@@ -24,9 +24,9 @@ import { Sensor } from '../sensors/entities/sensor.entity';
 import { PlantsService } from '../plants/userPlants/plants.service';
 import { SensorsService } from '../sensors/sensors.service';
 import { SensorsLinkedPlantView } from '../sensors/entities/sensorsLinkedPlant.viewEntity';
-import {
-  UserPlantsLinkedGeneralPlantsViewEntity
-} from '../plants/userPlants/entities/userPlantsLinkedGeneralPlants.viewEntity';
+import { UserPlantsLinkedGeneralPlantsViewEntity } from '../plants/userPlants/entities/userPlantsLinkedGeneralPlants.viewEntity';
+import { MailService } from '../mail/mail.service';
+import { MailerService } from '@nestjs-modules/mailer';
 
 describe('UsersController', () => {
   let controller: UsersController;
@@ -63,7 +63,13 @@ describe('UsersController', () => {
           provide: getRepositoryToken(SensorsLinkedPlantView),
           useClass: Repository,
         },
-
+        MailService,
+        {
+          provide: MailerService,
+          useValue: {
+            sendMail: jest.fn(),
+          },
+        },
       ],
     }).compile();
 
@@ -77,9 +83,8 @@ describe('UsersController', () => {
       getRepositoryToken(SensorsLinkedPlantView),
     );
     userPlantsLinkedGeneralPlant = module.get<
-      Repository<UserPlantsLinkedGeneralPlantsViewEntity>>
-    (getRepositoryToken(UserPlantsLinkedGeneralPlantsViewEntity),
-    );
+      Repository<UserPlantsLinkedGeneralPlantsViewEntity>
+    >(getRepositoryToken(UserPlantsLinkedGeneralPlantsViewEntity));
   });
 
   it('should be defined', () => {

@@ -19,10 +19,21 @@ import { SensorsController } from './sensors.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Sensor } from './entities/sensor.entity';
 import { SensorsLinkedPlantView } from './entities/sensorsLinkedPlant.viewEntity';
+import { UserPlantsLinkedGeneralPlantsViewEntity } from '../plants/userPlants/entities/userPlantsLinkedGeneralPlants.viewEntity';
+import { MailService } from '../mail/mail.service';
+import { UsersService } from '../users/users.service';
+import { User } from '../users/entities/user.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Sensor, SensorsLinkedPlantView])],
+  imports: [
+    TypeOrmModule.forFeature([
+      Sensor,
+      SensorsLinkedPlantView,
+      UserPlantsLinkedGeneralPlantsViewEntity,
+      User,
+    ]),
+  ],
   controllers: [SensorsController],
-  providers: [SensorsService],
+  providers: [SensorsService, MailService, UsersService],
 })
 export class SensorsModule {}

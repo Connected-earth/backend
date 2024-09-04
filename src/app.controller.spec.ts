@@ -23,6 +23,9 @@ import { UsersService } from './users/users.service';
 import { Repository } from 'typeorm';
 import { User } from './users/entities/user.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { MailService } from './mail/mail.service';
+import { MailerService } from '@nestjs-modules/mailer';
+import { SensorsService } from './sensors/sensors.service';
 
 describe('AppController', () => {
   let appController: AppController;
@@ -40,6 +43,13 @@ describe('AppController', () => {
         {
           provide: getRepositoryToken(User),
           useClass: Repository,
+        },
+        MailService,
+        {
+          provide: MailerService,
+          useValue: {
+            sendMail: jest.fn(),
+          },
         },
       ],
     }).compile();

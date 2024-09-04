@@ -20,6 +20,11 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Sensor } from './entities/sensor.entity';
 import { Repository } from 'typeorm';
 import { SensorsLinkedPlantView } from './entities/sensorsLinkedPlant.viewEntity';
+import { UserPlantsLinkedGeneralPlantsViewEntity } from '../plants/userPlants/entities/userPlantsLinkedGeneralPlants.viewEntity';
+import { MailService } from '../mail/mail.service';
+import { MailerService } from '@nestjs-modules/mailer';
+import { UsersService } from '../users/users.service';
+import { User } from '../users/entities/user.entity';
 
 describe('SensorsController', () => {
   let controller: SensorsController;
@@ -37,6 +42,22 @@ describe('SensorsController', () => {
         },
         {
           provide: getRepositoryToken(SensorsLinkedPlantView),
+          useClass: Repository,
+        },
+        {
+          provide: getRepositoryToken(UserPlantsLinkedGeneralPlantsViewEntity),
+          useClass: Repository,
+        },
+        MailService,
+        {
+          provide: MailerService,
+          useValue: {
+            sendMail: jest.fn(),
+          },
+        },
+        UsersService,
+        {
+          provide: getRepositoryToken(User),
           useClass: Repository,
         },
       ],

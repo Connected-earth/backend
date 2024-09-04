@@ -63,4 +63,7 @@ export class Sensor {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @Column({ nullable: true })
+  lastAlert: Date;
 }
