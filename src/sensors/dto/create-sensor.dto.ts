@@ -26,4 +26,5 @@ export class CreateSensorDto {
   temperature: number;
   createdAt: Date;
   updatedAt: Date;
+  lastAlert: Date;
 }

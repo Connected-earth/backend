@@ -12,6 +12,7 @@ import { Sensor } from '../sensors/entities/sensor.entity';
 import { User } from '../users/entities/user.entity';
 import { SensorsLinkedPlantView } from '../sensors/entities/sensorsLinkedPlant.viewEntity';
 import { UserPlantsLinkedGeneralPlantsViewEntity } from '../plants/userPlants/entities/userPlantsLinkedGeneralPlants.viewEntity';
+import { MailService } from "../mail/mail.service";
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { UserPlantsLinkedGeneralPlantsViewEntity } from '../plants/userPlants/en
     PlantsService,
     SensorsService,
     GeneralPlantsService,
+    MailService,
   ],
 })
 export class SeedModule {}
