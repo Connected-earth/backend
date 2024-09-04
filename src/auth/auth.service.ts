@@ -13,13 +13,12 @@
  *   - Rachel Tranchida
  */
 
-import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '../users/entities/user.entity';
 import { JwtPayloadType } from './types/jwt-payload.type';
 import * as argon from 'argon2';
-import * as crypto from 'crypto';
 
 @Injectable()
 export class AuthService {
@@ -31,7 +30,9 @@ export class AuthService {
   async validateUser(email: string, pass: string): Promise<any> {
     const user = (await this.usersService.findOneByMail(email)) as User;
 
-    Logger.log(user);
+    if (!user) {
+      throw new UnauthorizedException();
+    }
 
     const passwordMatch = await argon.verify(user.password, pass);
 
@@ -40,6 +41,7 @@ export class AuthService {
     }
     // TODO: créer un type afin que cela soit plus propre
     const { password, ...result } = user;
+
     return result;
   }
 
