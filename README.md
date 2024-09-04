@@ -1,119 +1,129 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Learn about the backend of PlantKeeper
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
+## Original contributors
 
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Rafael Dousse, Eva Ray, Quentin Surdez and Rachel Tranchida
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Launch backend locally
 
-## Description
+To set up and run the backend of the Plant Keeper application locally, follow the steps outlined below:
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### 1. Clone the repository
 
-## Project setup
+First, clone the repository using the following command:
 
 ```bash
-$ npm install
+ git clone git@github.com:Plant-keeper/backend.git
 ```
 
-## Compile and run the project
+### 2. Install Node.js and npm
+
+Ensure you have Node.js and npm installed on your system. If not, you can install them using the following command (for
+Debian/Ubuntu-based systems):
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+  sudo apt install nodejs npm
 ```
 
-## Run tests
+Alternatively, visit the [Node.js official website](https://nodejs.org/fr) for installation instructions tailored to
+other operating systems.
+
+### 3. Install Project Dependencies
+
+Navigate to the root directory of the cloned repository and install the necessary dependencies using npm:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+  cd backend
+  npm install
 ```
 
-## Database
+### 4. Set up the PostgreSQL database
 
-This project uses a PostgreSQL database. You can use Docker to run a PostgreSQL container locally on your machine.
+Add a `.env` file to the root directory of the project with the following content:
 
 ```bash
-$ docker run --name db-image-postgres -e POSTGRES_PASSWORD=1234 -d -p 5432:5432 postgres
+  DB_HOST=localhost
+  DB_PORT=5432
+  DB_USERNAME=postgres
+  DB_PASSWORD=1234
+  DB_NAME=test
 ```
 
-### UML diagram
+Next, you need to have docker installed on your machine. You can do this by following the instructions on the
+[Docker website](https://docs.docker.com/get-docker/). Create a docker container running a PostgreSQL database with the
+following command:
 
-![UML Diagram DB](./figures/db_uml.png)
+```bash
+  docker run --name db-image-postgres -e POSTGRES_PASSWORD=1234 -d -p 5432:5432 postgres
+```
 
-The database consists of the following five entities:
-- __User__: Represents an application user.
-- __Sensor__: Represents a sensor used to measure metrics of a plant.
-- __AbstractPlant__: An abstract entity representing a plant, serving as a base class for the `Plant` and `GeneralPlant` entities.
-- __Plant__: Represents a specific plant being monitored, derived from the `AbstractPlant` class.
-- __GeneralPlant__: Represents a generic plant type with predefined characteristics, also derived from the `AbstractPlant` class.
+For the backend to work properly, you must create a database named `test` in the PostgreSQL container. You must also
+create a schema named `plantkeeper_test` in the `test` database. You can do this using an IDE like DataGrip or by
+running the following commands:
 
-### Relational model
+```bash
+  docker exec -it db-image-postgres psql -U postgres -c "CREATE DATABASE test"
+  docker exec -it db-image-postgres psql -U postgres -d test -c "CREATE SCHEMA plantkeeper_test"
+```
 
-The relational model of the database is shown below, using the relational schema notation.
+### 5. Set up the mailing system
 
-![Relational Model DB](./figures/db_relational_model.png)
+To set up the mailing system, you must add the following environment variables to the `.env` file:
 
-### Relational diagram
+```bash
+  MAIL_HOST=<your_mail_host>
+  MAIL_PORT=<your_mail_port>
+  MAIL_SECURE=<your_mail_secure>
+  MAIL_USER=<your_mail_user>
+  MAIL_PASS=<your_mail_pass>
+  MAIL_SENDER_NAME=<your_mail_sender_name>
+ ```
 
-will come soon
+This mail adress will be used to send the alert mails to the users.
 
-## Resources
+This is an example of how to set up a Gmail account:
 
-Check out a few resources that may come in handy when working with NestJS:
+```bash
+  MAIL_HOST=smtp.gmail.com
+  MAIL_PORT=465
+  MAIL_SECURE=true
+  MAIL_USER=your-email@gmail.com
+  MAIL_PASS=your-email-password
+  MAIL_SENDER_NAME=Your Name
+ ```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time
-  using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our
-  official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework)
-  and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### 6. Set up the communication with the frontend
 
-## Support
+The backend is set up to enable CORS only for the PlantKeeper deployed frontend. If you want to run the frontend
+locally,
+you must add the following address to the list of allowed origins in the `main.ts`. The `allowedOrigin` array should
+look like this.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If
-you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+  const allowedOrigins = [
+        'https://plantkeeper.ch',
+        'http://localhost:3000',
+      ];
+```
 
-## Stay in touch
+### 7. Run the backend
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+To run the backend, use the following command:
 
-## License
+```bash
+  npm run start
+```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+The backend should now be running on `http://localhost:4000`.
+
+### 8. Add data to the database
+
+To populate the database with random data, you can send a get request to the `/seed` endpoint using a tool like Postman
+or Insomnia. Alternatively, you can use the following curl command to do this:
+
+```bash
+  curl http://localhost:4000/api/v1/seed
+```
+
+If you don't want random data, you will have to use the web interface to add data to the database, which you
+can access at `http://localhost:3000` (if the frontend is running).
