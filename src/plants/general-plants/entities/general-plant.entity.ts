@@ -29,12 +29,6 @@ export class GeneralPlant extends AbstractPlant {
   humidityMax: number;
 
   @Column()
-  ambientHumidityMin: number;
-
-  @Column()
-  ambientHumidityMax: number;
-
-  @Column()
   lightMin: number;
 
   @Column()

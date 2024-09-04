@@ -22,8 +22,6 @@ import { Sensor } from '../../../sensors/entities/sensor.entity';
       .addSelect('generalPlant.type', 'generalPlantType')
       .addSelect('generalPlant.humidityMin', 'generalPlantHumidityMin')
       .addSelect('generalPlant.humidityMax', 'generalPlantHumidityMax')
-      .addSelect('generalPlant.ambientHumidityMin', 'generalPlantAmbientHumidityMin')
-      .addSelect('generalPlant.ambientHumidityMax', 'generalPlantAmbientHumidityMax')
       .addSelect('generalPlant.lightMin', 'generalPlantLightMin')
       .addSelect('generalPlant.lightMax', 'generalPlantLightMax')
       .addSelect('generalPlant.temperatureMin', 'generalPlantTemperatureMin')
@@ -31,7 +29,8 @@ import { Sensor } from '../../../sensors/entities/sensor.entity';
       .addSelect('generalPlant.description', 'generalPlantDescription')
       .from(Plant, 'plant')
       .leftJoin(GeneralPlant, 'generalPlant', 'generalPlant.id = plant.generalPlantId')
-      .leftJoin(Sensor, 'sensor', 'sensor.id = plant.sensorId'),
+      .leftJoin(Sensor, 'sensor', 'sensor.id = plant.sensorId')
+      .orderBy('plant.id', 'ASC'),
 })
 export class UserPlantsLinkedGeneralPlantsViewEntity {
   @ViewColumn()
@@ -75,12 +74,6 @@ export class UserPlantsLinkedGeneralPlantsViewEntity {
 
   @ViewColumn()
   generalPlantHumidityMax: number;
-
-  @ViewColumn()
-  generalPlantAmbientHumidityMin: number;
-
-  @ViewColumn()
-  generalPlantAmbientHumidityMax: number;
 
   @ViewColumn()
   generalPlantLightMin: number;
