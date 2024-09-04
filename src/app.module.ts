@@ -27,6 +27,10 @@ import { SeedModule } from './seed/seed.module';
 import { SensorsLinkedPlantView } from './sensors/entities/sensorsLinkedPlant.viewEntity';
 import { APP_FILTER } from '@nestjs/core';
 import { DatabaseExceptionFilterException } from './db/databaseExceptionFilter.exception';
+import { MailModule } from './mail/mail.module';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { UserPlantsLinkedGeneralPlantsViewEntity } from './plants/userPlants/entities/userPlantsLinkedGeneralPlants.viewEntity';
 
 @Module({
   imports: [
@@ -38,9 +42,34 @@ import { DatabaseExceptionFilterException } from './db/databaseExceptionFilter.e
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [SensorsLinkedPlantView],
+      entities: [
+        SensorsLinkedPlantView,
+        UserPlantsLinkedGeneralPlantsViewEntity,
+      ],
       autoLoadEntities: true,
       synchronize: true,
+    }),
+    MailerModule.forRoot({
+      transport: {
+        host: process.env.MAIL_HOST,
+        port: process.env.MAIL_PORT,
+        secure: process.env.MAIL_SECURE,
+        ignoreTLS: true,
+        auth: {
+          user: process.env.MAIL_USER,
+          pass: process.env.MAIL_PASS,
+        },
+      },
+      defaults: {
+        from: '"info@plantkeeper.ch" <info@plantkeeper.ch>',
+      },
+      template: {
+        dir: process.cwd() + '/src/mail/templates/',
+        adapter: new HandlebarsAdapter(), // or new PugAdapter()
+        options: {
+          strict: true,
+        },
+      },
     }),
     AuthModule,
     UsersModule,
@@ -48,6 +77,7 @@ import { DatabaseExceptionFilterException } from './db/databaseExceptionFilter.e
     SensorsModule,
     GeneralPlantsModule,
     SeedModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [

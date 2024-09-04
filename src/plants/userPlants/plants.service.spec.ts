@@ -18,13 +18,12 @@ import { PlantsService } from './plants.service';
 import { Repository } from 'typeorm';
 import { Plant } from './entities/plant.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { GeneralPlantsService } from '../general-plants/general-plants.service';
-import { GeneralPlant } from '../general-plants/entities/general-plant.entity';
+import { UserPlantsLinkedGeneralPlantsViewEntity } from './entities/userPlantsLinkedGeneralPlants.viewEntity';
 
 describe('PlantsService', () => {
   let service: PlantsService;
   let plantsRepository: Repository<Plant>;
-
+  let userPlantsLinkedGeneralPlants: Repository<UserPlantsLinkedGeneralPlantsViewEntity>;
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -33,11 +32,19 @@ describe('PlantsService', () => {
           provide: getRepositoryToken(Plant),
           useClass: Repository,
         },
+        {
+          provide: getRepositoryToken(UserPlantsLinkedGeneralPlantsViewEntity),
+          useClass: Repository,
+        },
       ],
     }).compile();
 
     service = module.get<PlantsService>(PlantsService);
-    plantsRepository = module.get<Repository<Plant>>(getRepositoryToken(Plant));
+    plantsRepository = module.get<Repository<Plant>>(getRepositoryToken(Plant),
+      );
+    userPlantsLinkedGeneralPlants = module.get<
+      Repository<UserPlantsLinkedGeneralPlantsViewEntity>
+    >(getRepositoryToken(UserPlantsLinkedGeneralPlantsViewEntity),);
   });
 
   it('should be defined', () => {

@@ -19,12 +19,15 @@ import { UpdatePlantDto } from './dto/update-plant.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Plant } from './entities/plant.entity';
 import { Repository } from 'typeorm';
+import { UserPlantsLinkedGeneralPlantsViewEntity } from './entities/userPlantsLinkedGeneralPlants.viewEntity';
 
 @Injectable()
 export class PlantsService {
   constructor(
     @InjectRepository(Plant)
     private plantsRepository: Repository<Plant>,
+    @InjectRepository(UserPlantsLinkedGeneralPlantsViewEntity)
+    private userPlantLinkedGeneralPlants: Repository<UserPlantsLinkedGeneralPlantsViewEntity>,
   ) {}
 
   create(createPlantDto: CreatePlantDto) {
@@ -57,5 +60,9 @@ export class PlantsService {
 
   async remove(id: number) {
     await this.plantsRepository.delete(+id);
+  }
+
+  findLinkedGeneralPlants(plantId: number) {
+    return this.userPlantLinkedGeneralPlants.findOneBy({ plantId });
   }
 }

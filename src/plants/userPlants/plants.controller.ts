@@ -73,4 +73,9 @@ export class PlantsController {
   remove(@Param('id') id: string) {
     return this.plantsService.remove(+id);
   }
+
+  @Get(':id/linkedGeneralPlant')
+  findLinkedGeneralPlant(@Param('id') id: string) {
+    return this.plantsService.findLinkedGeneralPlants(+id);
+  }
 }

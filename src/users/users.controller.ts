@@ -36,8 +36,15 @@ import { PlantsService } from '../plants/userPlants/plants.service';
 import { CreateSensorDto } from '../sensors/dto/create-sensor.dto';
 import { SensorsService } from '../sensors/sensors.service';
 import { SensorsLinkedPlantView } from '../sensors/entities/sensorsLinkedPlant.viewEntity';
+
 import { TokenAuthGuard } from '../auth/token/token-auth.guard';
 import { JwtOrTokenAuthGuard } from '../auth/jwt-or-token/jwt-or-token-auth.guard';
+
+import { AuthGuard } from '@nestjs/passport';
+import {
+  UserPlantsLinkedGeneralPlantsViewEntity
+} from '../plants/userPlants/entities/userPlantsLinkedGeneralPlants.viewEntity';
+
 
 @Controller('users')
 export class UsersController {
@@ -98,6 +105,28 @@ export class UsersController {
     return sensorsLinked;
   }
 
+  @Get('plants/linkedGeneralPlant')
+  @UseGuards(JwtAuthGuard)
+  async findUserRelatedGeneralPlants(@Request() req: any) {
+    const user = (await this.findOne(req.user.id)) as User;
+
+    if (!user) {
+      throw new UnauthorizedException('This user is not found');
+    }
+
+    const generalPlantsLinked = [];
+    for (const plant of user.plants) {
+      const generalPlantPlant = (await this.plantsService.findLinkedGeneralPlants(
+          plant.id,
+      )) as UserPlantsLinkedGeneralPlantsViewEntity;
+      if (generalPlantPlant === null) {
+        continue;
+      }
+      generalPlantsLinked.push(generalPlantPlant);
+    }
+    return generalPlantsLinked;
+  }
+
   @Get('plants')
   @UseGuards(JwtAuthGuard)
   async findUserRealtedPlants(@Request() req: any) {
@@ -143,6 +172,13 @@ export class UsersController {
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(+id, updateUserDto);
+  }
+
+  @Patch()
+  @UseGuards(JwtAuthGuard)
+  updateMe(@Request() req: any, @Body() updateUserDto: UpdateUserDto) {
+    const userId = req.user.id;
+    return this.usersService.update(+userId, updateUserDto);
   }
 
   @Delete(':id')
