@@ -31,6 +31,7 @@ import { MailModule } from './mail/mail.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { UserPlantsLinkedGeneralPlantsViewEntity } from './plants/userPlants/entities/userPlantsLinkedGeneralPlants.viewEntity';
+import * as path from "node:path";
 
 @Module({
   imports: [
@@ -64,6 +65,7 @@ import { UserPlantsLinkedGeneralPlantsViewEntity } from './plants/userPlants/ent
         from: '"info@plantkeeper.ch" <info@plantkeeper.ch>',
       },
       template: {
+        dir: path.join(process.cwd(), './src/mail/templates'),
         adapter: new HandlebarsAdapter(), // or new PugAdapter()
         options: {
           strict: true,
