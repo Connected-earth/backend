@@ -34,10 +34,10 @@ export class GeneralPlant extends AbstractPlant {
   @Column()
   lightMax: number;
 
-  @Column('float8')
+  @Column('float')
   temperatureMin: number;
 
-  @Column('float8')
+  @Column('float')
   temperatureMax: number;
 
   @Column()

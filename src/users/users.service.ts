@@ -46,7 +46,7 @@ export class UsersService {
   }
 
   findOne(id: number): Promise<User | null> {
-    return this.usersRepository.findOneBy({ id });
+    return this.usersRepository.findOneBy({ id: id });
   }
 
   async findOneByMail(email: string): Promise<User | null> {
