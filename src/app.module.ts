@@ -64,7 +64,7 @@ import { UserPlantsLinkedGeneralPlantsViewEntity } from './plants/userPlants/ent
         from: '"info@plantkeeper.ch" <info@plantkeeper.ch>',
       },
       template: {
-        dir: 'src/mail/templates/',
+        dir: process.cwd() + '/src/mail/templates/',
         adapter: new HandlebarsAdapter(), // or new PugAdapter()
         options: {
           strict: true,
