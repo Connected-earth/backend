@@ -55,7 +55,7 @@ export class Sensor {
   @Column({ nullable: true })
   light: number;
 
-  @Column('float8', { nullable: true })
+  @Column('float', { nullable: true })
   temperature: number;
 
   @CreateDateColumn()

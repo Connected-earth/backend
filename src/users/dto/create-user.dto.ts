@@ -17,7 +17,7 @@ import { Plant } from '../../plants/userPlants/entities/plant.entity';
 
 export class CreateUserDto {
   id: number;
-  name: string;
+  username: string;
   email: string;
   password: string;
   role: string;
