@@ -5,8 +5,8 @@
   "installCommand": "npm install",
   "builds": [
     {
-      "src": "src/mail/templates/*",
-      "use": "@vercel/node"
+      "src": "src/mail/templates/**/*",
+      "use": "@vercel/static"
     },
     {
       "src": "src/main.ts",
