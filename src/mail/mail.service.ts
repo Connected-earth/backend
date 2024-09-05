@@ -11,7 +11,7 @@ export class MailService {
       .sendMail({
         to: user.email,
         subject: `${plantName} needs attention!`,
-        template: './src/mail/templates/alertEmail',
+        template: 'alertEmail',
         context: {
           code: user.id,
           username: user.username,

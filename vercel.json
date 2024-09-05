@@ -4,7 +4,6 @@
   "outputDirectory": "dist",
   "installCommand": "npm install",
   "builds": [
-
     {
       "src": "src/main.ts",
       "use": "@vercel/node"
