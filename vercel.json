@@ -4,10 +4,7 @@
   "outputDirectory": "dist",
   "installCommand": "npm install",
   "builds": [
-    {
-      "src": "./src/mail/templates/**/*",
-      "use": "@vercel/static"
-    },
+
     {
       "src": "src/main.ts",
       "use": "@vercel/node"

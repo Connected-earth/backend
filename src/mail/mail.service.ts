@@ -1,4 +1,4 @@
-import { Injectable, Logger } from "@nestjs/common";
+import { Injectable } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
 import { User } from '../users/entities/user.entity';
 
@@ -7,13 +7,11 @@ export class MailService {
   constructor(private readonly mailerService: MailerService) {}
 
   public async sendAlertMail(user: User, plantName: string) {
-    Logger.log(process.cwd());
-    console.log(process.cwd());
     await this.mailerService
       .sendMail({
         to: user.email,
         subject: `${plantName} needs attention!`,
-        template: 'alertEmail',
+        template: './src/mail/templates/alertEmail',
         context: {
           code: user.id,
           username: user.username,
