@@ -114,6 +114,12 @@ To run the backend, use the following command:
   npm run start
 ```
 
+To run the backend in dev mode, use the following command:
+
+```bash
+npm run start:dev
+```
+
 The backend should now be running on `http://localhost:4000`.
 
 ### 8. Add data to the database
@@ -193,11 +199,11 @@ We implemented __JWT (JSON Web Tokens)__ to secure specific API routes and handl
   user
   making the request. For example, for routes like `GET /users/plants`, the user ID is extracted from the JWT token, and
   the system returns only the plants associated with that user.
-- __AuthGuard for route protection__: We use __AuthGuard__ in conjunction with JWT to protect certain routes, ensuring
+- __Guard for route protection__: We extend __AuthGuard__ with our JWT strategy to protect certain routes, ensuring
   that
   only authenticated users with valid tokens can access them. Routes such as `GET /users/plants`, `GET /users/sensors`,
   and
-  `GET /users/me` are secured by the AuthGuard. If a request is made without a valid token, access is denied, and the
+  `GET /users/me` are secured by our __JwtAuthGuard__. If a request is made without a valid token, access is denied, and the
   user
   is either redirected to the login page or receives an unauthorized error response.
 - __Token Expiration__: JWT tokens have an expiration time, which adds an extra layer of security. If a token
@@ -205,7 +211,7 @@ We implemented __JWT (JSON Web Tokens)__ to secure specific API routes and handl
   the user must log in again to obtain a new token, reducing the risk of unauthorized access to the system. We chose
   a token expiration time of 24 hour to balance security and user convenience.
 
-By combining JWT with AuthGuard, we enhance the security of our API, ensuring that only authenticated users can access
+By creating our JWT AuthGuard, we enhance the security of our API, ensuring that only authenticated users can access
 sensitive data and routes.
 
 ### 5. Admin token for access control on sensitive routes
@@ -224,6 +230,8 @@ To secure routes that should not be accessible publicly, we implemented an __adm
 - __Header Verification__: For each request to an admin route, a specific header is included with the token or hash.
   This allows us to verify the admin's credentials on every request and ensure that only authorized users can access or
   modify sensitive information.
+
+Currently this strategy is only used on a few routes. It is not fully implemented yet and would need some more development time to be functional. 
 
 ## Database
 
